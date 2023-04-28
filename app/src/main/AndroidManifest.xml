@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HealthyLifestyleMobile"
         tools:targetApi="31">
         <activity
+            android:name=".Registration"
+            android:exported="false" />
+        <activity
             android:name=".Autorization"
             android:exported="false" />
         <activity

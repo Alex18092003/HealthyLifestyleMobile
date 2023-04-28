@@ -19,7 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:fontFamily="@font/comforta"
             android:text="Авторизация"
+            android:textSize="40dp"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +48,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/fields_input"
             android:hint="Логин"
+            android:fontFamily="@font/comforta"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +61,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/fields_input"
             android:hint="Пароль"
+            android:fontFamily="@font/comforta"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,10 +73,77 @@
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
             android:onClick="getVisiblePassword"
-            android:src="@drawable/icon_not_visible"
+            android:src="@drawable/icon_password_visible1"
             app:layout_constraintBottom_toBottomOf="@+id/textPassword"
             app:layout_constraintEnd_toEndOf="@+id/textPassword"
             app:layout_constraintTop_toTopOf="@+id/textPassword" />
+
+        <TextView
+            android:id="@+id/Hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:padding="15dp"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPassword"
+            app:layout_constraintBottom_toTopOf="@+id/Entry"
+            ></TextView>
+
+        <Button
+            android:id="@+id/Entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Войти"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintTop_toBottomOf="@+id/Hint"
+            app:layout_constraintBottom_toTopOf="@+id/ili"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+         />
+
+        <TextView
+            android:id="@+id/ili"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="ИЛИ"
+            android:padding="15dp"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Entry"></TextView>
+
+        <Button
+            android:id="@+id/Registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Регистрация"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="10dp"
+            android:onClick="nextRegistation"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ili" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/comforta"
+            android:text="Зарегистрируйтесь, чтобы получить доступ к множеству рецептов и модулем расчета калорий и БЖУ"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Registration"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

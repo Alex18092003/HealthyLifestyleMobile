@@ -9,21 +9,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class Autorization extends AppCompatActivity {
-
+public class Registration extends AppCompatActivity {
     ImageView image;
     EditText textPassword, textLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_autorization);
+        setContentView(R.layout.activity_registration);
 
         image = findViewById(R.id.ivVisiblePassword);
         textLogin = findViewById(R.id.textLogin);
         textPassword = findViewById(R.id.textPassword);
         textPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
 
         textLogin.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
@@ -39,7 +37,6 @@ public class Autorization extends AppCompatActivity {
         });
     }
 
-
     public void getVisiblePassword(View v)
     {
         if(textPassword.getInputType() == 129)
@@ -54,8 +51,8 @@ public class Autorization extends AppCompatActivity {
         }
     }
 
-    public void nextRegistation(View view)
+    public void nextAutorization(View view)
     {
-        startActivity(new Intent(this, Registration.class));
+        startActivity(new Intent(this, Autorization.class));
     }
 }
