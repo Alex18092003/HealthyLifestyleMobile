@@ -78,6 +78,30 @@
                 app:layout_constraintEnd_toEndOf="@+id/textPassword"
                 app:layout_constraintTop_toTopOf="@+id/textPassword" />
 
+            <EditText
+                android:id="@+id/textPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/fields_input"
+                android:hint="Повторите пароль"
+                android:fontFamily="@font/comforta"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textPassword" />
+
+            <ImageView
+                android:id="@+id/ivVisiblePassword2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:onClick="getVisiblePassword2"
+                android:src="@drawable/icon_password_visible1"
+                app:layout_constraintBottom_toBottomOf="@+id/textPassword2"
+                app:layout_constraintEnd_toEndOf="@+id/textPassword2"
+                app:layout_constraintTop_toTopOf="@+id/textPassword2" />
+
             <TextView
                 android:id="@+id/Hint"
                 android:layout_width="match_parent"
@@ -87,7 +111,7 @@
                 android:fontFamily="@font/comforta"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textPassword"
+                app:layout_constraintTop_toBottomOf="@+id/textPassword2"
                 app:layout_constraintBottom_toTopOf="@+id/Reg"
                 ></TextView>
 

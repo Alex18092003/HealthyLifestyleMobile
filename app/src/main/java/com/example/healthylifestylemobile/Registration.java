@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 public class Registration extends AppCompatActivity {
     ImageView image;
-    EditText textPassword, textLogin;
+    EditText textPassword,textPassword2, textLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,8 @@ public class Registration extends AppCompatActivity {
         textLogin = findViewById(R.id.textLogin);
         textPassword = findViewById(R.id.textPassword);
         textPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        textPassword2 = findViewById(R.id.textPassword2);
+        textPassword2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         textLogin.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
@@ -33,11 +35,31 @@ public class Registration extends AppCompatActivity {
             if (hasFocus)
                 textPassword.setHint("");
             else
-                textPassword.setHint("Password");
+                textPassword.setHint("Пароль");
+        });
+        textPassword2.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                textPassword2.setHint("");
+            else
+                textPassword2.setHint("Повторите пароль");
         });
     }
 
     public void getVisiblePassword(View v)
+    {
+        if(textPassword.getInputType() == 129)
+        {
+            image.setImageResource(R.drawable.icon_password_visible1);
+            textPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
+        else
+        {
+            image.setImageResource(R.drawable.icon_password_not_visible1);
+            textPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        }
+    }
+
+    public void getVisiblePassword2(View v)
     {
         if(textPassword.getInputType() == 129)
         {

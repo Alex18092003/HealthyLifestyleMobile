@@ -13,6 +13,24 @@
         android:theme="@style/Theme.HealthyLifestyleMobile"
         tools:targetApi="31">
         <activity
+            android:name=".UserGoal"
+            android:exported="false" />
+        <activity
+            android:name=".UserDataHeight"
+            android:exported="false" />
+        <activity
+            android:name=".UserDataWeight"
+            android:exported="false" />
+        <activity
+            android:name=".UserDataAge"
+            android:exported="false" />
+        <activity
+            android:name=".UserData"
+            android:exported="false" />
+        <activity
+            android:name=".Activities"
+            android:exported="false" />
+        <activity
             android:name=".Registration"
             android:exported="false" />
         <activity
