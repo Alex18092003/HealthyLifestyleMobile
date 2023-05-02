@@ -16,7 +16,7 @@ public class HomeAutorization extends AppCompatActivity {
 
     public void nextAutorization(View view)
     {
-        startActivity(new Intent(this, Autorization.class));
+        startActivity(new Intent(this, Authorization.class));
     }
     public void nextRegistation(View view)
     {

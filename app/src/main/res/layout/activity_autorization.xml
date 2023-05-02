@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@color/m"
-    tools:context=".Autorization">
+    tools:context=".Authorization">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/v"
@@ -99,6 +99,7 @@
             android:textAllCaps="false"
             android:textSize="20dp"
             android:padding="10dp"
+            android:onClick="nextMain"
             android:fontFamily="@font/comforta"
             app:layout_constraintTop_toBottomOf="@+id/Hint"
             app:layout_constraintBottom_toTopOf="@+id/ili"
@@ -132,6 +133,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ili" />
 
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/Registration"
+            app:layout_constraintBottom_toTopOf="@id/text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
@@ -143,7 +155,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Registration"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/pbLoading"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

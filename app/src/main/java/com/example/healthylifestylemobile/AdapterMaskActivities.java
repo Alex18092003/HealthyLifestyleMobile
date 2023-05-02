@@ -11,15 +11,15 @@ import java.util.List;
 
 public class AdapterMaskActivities extends BaseAdapter {
     private Context mContext;
-    private Context mContextGoal;
-    List<MaskActivities> maskList;
-    List<MaskGoal> maskListGoal;
 
-    public AdapterMaskActivities(Context mContext, List<MaskActivities> maskList, List<MaskGoal> maskListGoal ) {
+    List<MaskActivities> maskList;
+
+
+    public AdapterMaskActivities(Context mContext, List<MaskActivities> maskList) {
         this.mContext = mContext;
         this.maskList = maskList;
 
-        this.maskListGoal = maskListGoal;
+
     }
 
 
@@ -28,16 +28,20 @@ public class AdapterMaskActivities extends BaseAdapter {
         return maskList.size();
     }
 
+
     @Override
     public Object getItem(int i) {
         return maskList.get(i);
     }
+
 
     @Override
     public long getItemId(int i)
     {
         return maskList.get(i).getId();
     }
+
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,5 +55,6 @@ public class AdapterMaskActivities extends BaseAdapter {
 
         return v;
     }
+
 
 }
