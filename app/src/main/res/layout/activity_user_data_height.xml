@@ -43,17 +43,18 @@
             >
 
             <EditText
-                android:id="@+id/textWeight"
+                android:id="@+id/textHeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/fields_input"
-                android:hint="Логин"
+                android:hint="Введите свой вес"
                 android:fontFamily="@font/comforta"
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/Hint"
                 app:layout_constraintTop_toTopOf="parent"/>
+
             <TextView
                 android:id="@+id/H"
                 android:layout_width="match_parent"
@@ -64,7 +65,7 @@
                 android:fontFamily="@font/comforta"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textWeight"
+                app:layout_constraintTop_toBottomOf="@+id/textHeight"
                 app:layout_constraintBottom_toTopOf="@+id/Hint"
                 ></TextView>
 
@@ -80,8 +81,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/H"
-                app:layout_constraintBottom_toTopOf="@+id/Entry"
+                app:layout_constraintBottom_toTopOf="@+id/pbLoading"
                 ></TextView>
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/Hint"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <Button
                 android:id="@+id/Entry"
@@ -93,7 +104,7 @@
                 android:padding="10dp"
                 android:onClick="nextWeight"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Back"
@@ -109,7 +120,7 @@
                 android:padding="10dp"
                 android:onClick="nextAge"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/Entry"
                 app:layout_constraintStart_toStartOf="parent"

@@ -42,15 +42,116 @@
             android:elevation="30dp"
             >
 
-            <ListView
-                android:id="@+id/lvData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/Gender"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/Hint"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:orientation="horizontal">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lvData">
+
+                    <CheckBox
+                        android:textSize="20dp"
+                        android:id="@+id/Ch1"
+
+                        android:checked="false"
+                        android:layout_marginTop="33dp"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/MyCheckBox"
+                        app:layout_constraintBottom_toTopOf="@+id/Ch2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+                    </CheckBox>
+                    <CheckBox
+                        android:textSize="20dp"
+                        android:id="@+id/Ch2"
+
+                        android:checked="false"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/Ch3"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/MyCheckBox"
+                        android:layout_marginTop="25dp"
+                        app:layout_constraintTop_toBottomOf="@+id/Ch1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+                    </CheckBox>
+                    <CheckBox
+                        android:textSize="20dp"
+                        android:id="@+id/Ch3"
+                        android:checked="false"
+
+                        android:layout_marginTop="30dp"
+                        android:theme="@style/MyCheckBox"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/Ch4"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/Ch2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+                    </CheckBox>
+                    <CheckBox
+                        android:textSize="20dp"
+                        android:id="@+id/Ch4"
+                        android:checked="false"
+
+                        android:layout_marginTop="30dp"
+                        android:theme="@style/MyCheckBox"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/Ch5"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/comforta"
+                        app:layout_constraintTop_toBottomOf="@+id/Ch3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+                    </CheckBox>
+                    <CheckBox
+                        android:textSize="20dp"
+                        android:id="@+id/Ch5"
+                        android:checked="false"
+
+                        android:layout_marginTop="30dp"
+                        android:theme="@style/MyCheckBox"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/Ch4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+                    </CheckBox>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <ListView
+                    android:id="@+id/lvData"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/Ch1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             <TextView
                 android:id="@+id/Hint"
@@ -61,7 +162,7 @@
                 android:fontFamily="@font/comforta"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lvData"
+                app:layout_constraintTop_toBottomOf="@+id/Gender"
                 app:layout_constraintBottom_toTopOf="@+id/pbLoading"
                 ></TextView>
 

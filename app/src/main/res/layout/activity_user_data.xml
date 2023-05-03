@@ -51,7 +51,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:theme="@style/MyCheckBox"
+                    android:textSize="20dp"
 
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toTopOf="@+id/GenderG"
                     app:layout_constraintTop_toTopOf="parent"
                     ></CheckBox>
@@ -61,11 +63,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Женский"
-                android:checked="true"
+                android:checked="false"
+
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:theme="@style/MyCheckBox"
-
+                android:textSize="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/GenderM"
                 app:layout_constraintBottom_toTopOf="@+id/Hint"
                 ></CheckBox>
@@ -83,8 +87,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/GenderG"
-                app:layout_constraintBottom_toTopOf="@+id/Entry"
+                app:layout_constraintBottom_toTopOf="@+id/pbLoading"
                 ></TextView>
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/Hint"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <Button
                 android:id="@+id/Entry"
@@ -96,7 +111,7 @@
                 android:padding="10dp"
                 android:onClick="nextAge"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Back"
@@ -112,7 +127,7 @@
                 android:padding="10dp"
                 android:onClick="nextActivities"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/Entry"
                 app:layout_constraintStart_toStartOf="parent"

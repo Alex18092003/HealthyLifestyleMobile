@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/fields_input"
-                android:hint="Логин"
+                android:hint="Введите свой возраст"
                 android:fontFamily="@font/comforta"
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,8 +80,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/H"
-                app:layout_constraintBottom_toTopOf="@+id/Entry"
+                app:layout_constraintBottom_toTopOf="@+id/pbLoading"
                 ></TextView>
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/Hint"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <Button
                 android:id="@+id/Entry"
@@ -93,7 +103,7 @@
                 android:padding="10dp"
                 android:onClick="nextHeight"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Back"
@@ -109,7 +119,7 @@
                 android:padding="10dp"
                 android:onClick="nextData"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/Entry"
                 app:layout_constraintStart_toStartOf="parent"

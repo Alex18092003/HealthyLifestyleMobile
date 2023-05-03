@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +25,9 @@ import java.util.List;
 public class Activities extends AppCompatActivity {
     TextView Hint;
     ProgressBar progressBar;
+    CheckBox Ch1, Ch2, Ch3, Ch4, Ch5;
     private AdapterMaskActivities pAdapter;
+    String login, password , idActivities;
     private List<MaskActivities> listProduct = new ArrayList<>();
 
     @Override
@@ -33,16 +37,77 @@ public class Activities extends AppCompatActivity {
 
         Hint = findViewById(R.id.Hint);
         progressBar = findViewById(R.id.pbLoading);
+        Ch1= findViewById(R.id.Ch1);
+        Ch2= findViewById(R.id.Ch2);
+        Ch3= findViewById(R.id.Ch3);
+        Ch4= findViewById(R.id.Ch4);
+        Ch5= findViewById(R.id.Ch5);
 
         Intent intent = getIntent();
-        String login = intent.getStringExtra("login");
-        String password = intent.getStringExtra("password");
+         login = intent.getStringExtra("login");
+         password = intent.getStringExtra("password");
 
 
         ListView ivProducts = findViewById(R.id.lvData);
         pAdapter = new AdapterMaskActivities(Activities.this, listProduct);
         ivProducts.setAdapter(pAdapter);
         new GetActivities().execute();
+
+        Ch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Ch2.setChecked(false);
+                    Ch3.setChecked(false);
+                    Ch4.setChecked(false);
+                    Ch5.setChecked(false);
+                }
+            }
+        });
+        Ch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Ch1.setChecked(false);
+                    Ch3.setChecked(false);
+                    Ch4.setChecked(false);
+                    Ch5.setChecked(false);
+                }
+            }
+        });
+        Ch3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Ch1.setChecked(false);
+                    Ch2.setChecked(false);
+                    Ch4.setChecked(false);
+                    Ch5.setChecked(false);
+                }
+            }
+        });
+        Ch4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Ch1.setChecked(false);
+                    Ch2.setChecked(false);
+                    Ch3.setChecked(false);
+                    Ch5.setChecked(false);
+                }
+            }
+        });
+        Ch5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Ch1.setChecked(false);
+                    Ch2.setChecked(false);
+                    Ch3.setChecked(false);
+                    Ch4.setChecked(false);
+                }
+            }
+        });
     }
 
 
@@ -85,6 +150,7 @@ public class Activities extends AppCompatActivity {
                     listProduct.add(tempActivities);
                     pAdapter.notifyDataSetInvalidated();
                     progressBar.setVisibility(View.GONE);
+
                 }
             } catch (Exception ex) {
 
@@ -97,7 +163,65 @@ public class Activities extends AppCompatActivity {
 
     public void nextGender(View view)
     {
-        startActivity(new Intent(this, UserData.class));
+        progressBar.setVisibility(View.VISIBLE);
+
+        if(Ch1.isChecked() == true)
+        {
+            idActivities = "1";
+            Intent intent = new Intent(this, UserData.class);
+            intent.putExtra("login", login);
+            intent.putExtra("password", password);
+            intent.putExtra("idActivities", idActivities);
+            startActivity(intent);
+            progressBar.setVisibility(View.GONE);
+        }
+        if(Ch2.isChecked() == true)
+        {
+            idActivities = "2";
+            Intent intent = new Intent(this, UserData.class);
+            intent.putExtra("login", login);
+            intent.putExtra("password", password);
+            intent.putExtra("idActivities", idActivities);
+            startActivity(intent);
+            progressBar.setVisibility(View.GONE);
+        }
+        if(Ch3.isChecked() == true)
+        {
+            idActivities = "3";
+            Intent intent = new Intent(this, UserData.class);
+            intent.putExtra("login", login);
+            intent.putExtra("password", password);
+            intent.putExtra("idActivities", idActivities);
+            startActivity(intent);
+            progressBar.setVisibility(View.GONE);
+        }
+        if(Ch4.isChecked() == true)
+        {
+            idActivities = "4";
+            Intent intent = new Intent(this, UserData.class);
+            intent.putExtra("login", login);
+            intent.putExtra("password", password);
+            intent.putExtra("idActivities", idActivities);
+            startActivity(intent);
+            progressBar.setVisibility(View.GONE);
+        }
+        if(Ch5.isChecked() == true)
+        {
+            idActivities = "5";
+            Intent intent = new Intent(this, UserData.class);
+            intent.putExtra("login", login);
+            intent.putExtra("password", password);
+            intent.putExtra("idActivities", idActivities);
+            startActivity(intent);
+            progressBar.setVisibility(View.GONE);
+        }
+        if(Ch1.isChecked() == false && Ch2.isChecked() == false &&
+                Ch3.isChecked() == false && Ch4.isChecked() == false &&
+                Ch5.isChecked() == false) {
+            Hint.setText( "Необходимо выбрать активность");
+            progressBar.setVisibility(View.GONE);
+        }
+
     }
 
 
@@ -105,4 +229,6 @@ public class Activities extends AppCompatActivity {
     {
         startActivity(new Intent(this, Registration.class));
     }
+
+
 }
