@@ -1,25 +1,23 @@
 package com.example.healthylifestylemobile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-//import retrofit2.Call;
-//import retrofit2.Callback;
-//import retrofit2.Response;
-//import retrofit2.Retrofit;
-//import retrofit2.converter.gson.GsonConverterFactory;
+import androidx.appcompat.app.AppCompatActivity;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Authorization extends AppCompatActivity {
@@ -52,7 +50,7 @@ public class Authorization extends AppCompatActivity {
             if (hasFocus)
                 textPassword.setHint("");
             else
-                textPassword.setHint("Password");
+                textPassword.setHint("Пароль");
         });
 
         SharedPreferences prefs = this.getSharedPreferences(
@@ -63,7 +61,7 @@ public class Authorization extends AppCompatActivity {
     {
         if(textLogin.getText().toString().equals("") || textPassword.getText().toString().equals("")) // Проверка заполненности полей
         {
-            Hint.setText("Поля не заполены\\nДля входа необходимо ввести логин И пароль или пройти Регистрацию");
+            Hint.setText("Поля не заполены\nДля входа необходимо ввести логин И пароль или пройти Регистрацию");
         }
         else
         {
@@ -71,64 +69,67 @@ public class Authorization extends AppCompatActivity {
         }
     }
 
-    private void callLogin() // Процесс проверки пользователя
+
+    private void callLogin()
     {
+        progressBar.setVisibility(View.VISIBLE);
         String login = String.valueOf(textLogin.getText());
         String password = String.valueOf(textPassword.getText());
-        Retrofit retrofit = new Builder()
-                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/Users")
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        ModelSendUser modelSendUser = new ModelSendUser(email, password);
-        Call<UserModel> call = retrofitAPI.createUser(modelSendUser);
-        call.enqueue(new Callback<MaskUser>() {
+        //ModelSendUser modelSendUser = new ModelSendUser(login, password);
+        //Call<UserModel> call = retrofitAPI.createUser(modelSendUser);
+        Call<UserModel> call = retrofitAPI.Login(login, password);
+
+        call.enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Call<MaskUser> call, Response<MaskUser> response) {
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(Login.this, "Пользователь с такой почтой и паролем не найден", Toast.LENGTH_SHORT).show();
+                    Hint.setText("При авторизации возникла ошибка");
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
+                progressBar.setVisibility(View.GONE);
                 if(response.body() != null)
                 {
-                    if(response.body().getToken() != null)
-                    {
-                        SharedPreferences prefs = getSharedPreferences( // Сохранение данных
-                                "Date", Context.MODE_PRIVATE);
-                        prefs.edit().putString("Email", "" + email).apply();
-                        prefs.edit().putString("Avatar", "" + response.body().getAvatar()).apply();
-                        prefs.edit().putString("NickName", "" + response.body().getNickName()).apply();
-
-                        Onboarding.avatar = response.body().getAvatar();
-                        Onboarding.nickName = response.body().getNickName();
-
-                        Intent intent = new Intent(Login.this, Main.class);
-                        Bundle b = new Bundle();
-                        intent.putExtras(b);
+                    if(response.body().getLogin() == "6") {
+                        Intent intent = new Intent(Authorization.this, HomePageWithCalories.class);
                         startActivity(intent);
                     }
+                }
+                else
+                {
+                    Hint.setText( "Пользователь с таким логином и паролем не найден");
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
-                Toast.makeText(Login.this, "При авторизации возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Hint.setText( "При  возникла ошибка: ");
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
+
 
 
     public void getVisiblePassword(View v)
     {
         if(textPassword.getInputType() == 129)
         {
-            image.setImageResource(R.drawable.icon_password_visible1);
+            image.setImageResource(R.drawable.icon_password_not_visible1);
             textPassword.setInputType(InputType.TYPE_CLASS_TEXT);
         }
         else
         {
-            image.setImageResource(R.drawable.icon_password_not_visible1);
+            image.setImageResource(R.drawable.icon_password_visible1);
             textPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
     }
@@ -138,7 +139,4 @@ public class Authorization extends AppCompatActivity {
         startActivity(new Intent(this, Registration.class));
     }
 
-
-    private class Retrofit {
-    }
 }

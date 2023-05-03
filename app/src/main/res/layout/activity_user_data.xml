@@ -42,15 +42,36 @@
             android:elevation="30dp"
             >
 
-            <ListView
-                android:id="@+id/lvData"
+                <CheckBox
+                    android:id="@+id/GenderM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Мужской"
+                    android:checked="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:theme="@style/MyCheckBox"
+
+                    app:layout_constraintBottom_toTopOf="@+id/GenderG"
+                    app:layout_constraintTop_toTopOf="parent"
+                    ></CheckBox>
+
+            <CheckBox
+                android:id="@+id/GenderG"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="Женский"
+                android:checked="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:theme="@style/MyCheckBox"
+
+                app:layout_constraintTop_toBottomOf="@+id/GenderM"
                 app:layout_constraintBottom_toTopOf="@+id/Hint"
-                app:layout_constraintTop_toTopOf="parent"/>
+                ></CheckBox>
+
+
+
 
             <TextView
                 android:id="@+id/Hint"
@@ -61,7 +82,7 @@
                 android:fontFamily="@font/comforta"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lvData"
+                app:layout_constraintTop_toBottomOf="@+id/GenderG"
                 app:layout_constraintBottom_toTopOf="@+id/Entry"
                 ></TextView>
 
@@ -73,6 +94,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:padding="10dp"
+                android:onClick="nextAge"
                 android:fontFamily="@font/comforta"
                 app:layout_constraintTop_toBottomOf="@+id/Hint"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -88,6 +110,7 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:padding="10dp"
+                android:onClick="nextActivities"
                 android:fontFamily="@font/comforta"
                 app:layout_constraintTop_toBottomOf="@+id/Hint"
                 app:layout_constraintBottom_toBottomOf="parent"

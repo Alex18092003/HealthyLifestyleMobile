@@ -45,7 +45,7 @@
             <ListView
                 android:id="@+id/lvData"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,8 +62,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lvData"
-                app:layout_constraintBottom_toTopOf="@+id/Entry"
+                app:layout_constraintBottom_toTopOf="@+id/pbLoading"
                 ></TextView>
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/Hint"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <Button
                 android:id="@+id/Entry"
@@ -73,8 +84,9 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:padding="10dp"
+                android:onClick="nextGender"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Back"
@@ -88,8 +100,9 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:padding="10dp"
+                android:onClick="nextRegistration"
                 android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/Entry"
                 app:layout_constraintStart_toStartOf="parent"

@@ -5,14 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <CheckedTextView
+    <TextView
         android:id="@+id/Title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="10dp"
         android:textSize="20dp"
+        android:textColor="@color/black"
+        android:text="Title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></CheckedTextView>
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

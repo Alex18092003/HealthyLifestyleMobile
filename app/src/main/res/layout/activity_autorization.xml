@@ -88,8 +88,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/Entry"
+            app:layout_constraintBottom_toTopOf="@+id/pbLoading"
             ></TextView>
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/Hint"
+            app:layout_constraintBottom_toTopOf="@id/Entry"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <Button
             android:id="@+id/Entry"
@@ -101,7 +112,7 @@
             android:padding="10dp"
             android:onClick="nextMain"
             android:fontFamily="@font/comforta"
-            app:layout_constraintTop_toBottomOf="@+id/Hint"
+            app:layout_constraintTop_toBottomOf="@+id/pbLoading"
             app:layout_constraintBottom_toTopOf="@+id/ili"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,17 +144,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ili" />
 
-        <ProgressBar
-            android:id="@+id/pbLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@id/Registration"
-            app:layout_constraintBottom_toTopOf="@id/text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pbLoading"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/Registration"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

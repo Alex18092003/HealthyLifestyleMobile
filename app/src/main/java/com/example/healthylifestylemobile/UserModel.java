@@ -1,8 +1,6 @@
 package com.example.healthylifestylemobile;
 
-import java.io.Serializable;
-
-public class UserModel implements Serializable {
+public class UserModel {
 
     private int UserId;
     private int GenderId;

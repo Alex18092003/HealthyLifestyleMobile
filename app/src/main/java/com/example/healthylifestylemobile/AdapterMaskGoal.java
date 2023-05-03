@@ -8,49 +8,38 @@ import android.widget.TextView;
 
 import java.util.List;
 
+public class AdapterMaskGoal extends BaseAdapter {
 
-public class AdapterMaskActivities extends BaseAdapter {
     private Context mContext;
-    List<MaskActivities> maskList;
+    private List<MaskGoal> maskList;
 
-
-
-    public AdapterMaskActivities(Context mContext, List<MaskActivities> maskList) {
+    public AdapterMaskGoal(Context mContext, List<MaskGoal> listProduct) {
         this.mContext = mContext;
-        this.maskList = maskList;
+        this.maskList = listProduct;
     }
-
-
 
     @Override
     public int getCount() {
         return maskList.size();
     }
 
-
     @Override
     public Object getItem(int i) {
         return maskList.get(i);
     }
-
-
     @Override
     public long getItemId(int i)
     {
-        return maskList.get(i).getActivityId();
+        return maskList.get(i).getGoalId();
     }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View v = View.inflate(mContext,R.layout.item_activities,null);
-
-        TextView title = v.findViewById(R.id.Title);
-
-        MaskActivities maskActivities = maskList.get(position);
-        title.setText(maskActivities.getTitle());
+        View v = View.inflate(mContext,R.layout.item_goal,null);
+        TextView Title = v.findViewById(R.id.Title);
+        MaskGoal maskGoal = maskList.get(position);
+        Title.setText(maskGoal.getTitle());
 
         return v;
     }

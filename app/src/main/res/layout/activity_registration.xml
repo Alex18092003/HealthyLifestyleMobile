@@ -112,8 +112,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textPassword2"
-                app:layout_constraintBottom_toTopOf="@+id/Reg"
+                app:layout_constraintBottom_toTopOf="@+id/pbLoading"
                 ></TextView>
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/Hint"
+                app:layout_constraintBottom_toTopOf="@id/Reg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <Button
                 android:id="@+id/Reg"
@@ -123,8 +134,10 @@
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:padding="10dp"
-                android:fontFamily="@font/comforta"
-                app:layout_constraintTop_toBottomOf="@+id/Hint"
+                android:onClick="nextRegistrarion"
+
+            android:fontFamily="@font/comforta"
+                app:layout_constraintTop_toBottomOf="@+id/pbLoading"
                 app:layout_constraintBottom_toTopOf="@+id/ili"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

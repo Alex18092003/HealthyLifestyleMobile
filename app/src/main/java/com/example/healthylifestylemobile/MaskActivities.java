@@ -5,21 +5,21 @@ import android.os.Parcelable;
 
 public class MaskActivities implements Parcelable {
 
-    private int id;
-    private String title;
+    private int ActivityId;
+    private String Title;
 
-    private float coefficient;
+    private double Coefficient;
 
-    public MaskActivities(int id, String title, float coefficient) {
-        this.id = id;
-        this.title = title;
-        this.coefficient = coefficient;
+    public MaskActivities(int ActivityId, String Title, double Coefficient) {
+        this.ActivityId = ActivityId;
+        this.Title = Title;
+        this.Coefficient = Coefficient;
     }
 
     protected MaskActivities(Parcel in) {
-        id = in.readInt();
-        title = in.readString();
-        coefficient = in.readFloat();
+        ActivityId = in.readInt();
+        Title = in.readString();
+        Coefficient = in.readDouble();
     }
 
     public static final Creator<MaskActivities> CREATOR = new Creator<MaskActivities>() {
@@ -34,30 +34,30 @@ public class MaskActivities implements Parcelable {
         }
     };
 
-    public int getId() {
-        return id;
+    public int getActivityId() {
+        return ActivityId;
     }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
-    public float getCoefficient() {
-        return coefficient;
+    public double getCoefficient() {
+        return Coefficient;
     }
 
 
 
-    public void setId(int id) {
-        this.id = id;
+    public void setActivityId(int ActivityId) {
+        this.ActivityId = ActivityId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String Title) {
+        this.Title = Title;
     }
 
-    public void setCoefficient(float coefficient) {
-        this.coefficient = coefficient;
+    public void setCoefficient(double Coefficient) {
+        this.Coefficient = Coefficient;
     }
 
 
@@ -68,9 +68,9 @@ public class MaskActivities implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(title);
-        dest.writeFloat(coefficient);
+        dest.writeInt(ActivityId);
+        dest.writeString(Title);
+        dest.writeDouble(Coefficient);
     }
 
 }
