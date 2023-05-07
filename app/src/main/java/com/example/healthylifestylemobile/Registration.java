@@ -11,6 +11,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Registration extends AppCompatActivity {
     ImageView image, image2;
     EditText textPassword,textPassword2, textLogin;
@@ -48,7 +54,7 @@ public class Registration extends AppCompatActivity {
             if (hasFocus)
                 textPassword2.setHint("");
             else
-                textPassword2.setHint("Повторный пароль");
+                textPassword2.setHint("Повторите пароль");
         });
     }
 
@@ -105,14 +111,58 @@ public class Registration extends AppCompatActivity {
         }
         else
         {
-            Intent intent = new Intent(this, Activities.class);
-            intent.putExtra("login", textLogin.getText().toString());
-            intent.putExtra("password", textPassword.getText().toString());
-            startActivity(intent);
+            callRegistration();
+
             progressBar.setVisibility(View.GONE);
-            //Intent myIntent = new Intent(Registration.this, Activities.class);
-            //Registration.this.startActivity(myIntent);
+
         }
+    }
+
+    private void callRegistration()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        String Login = String.valueOf(textLogin.getText());
+        String Password = String.valueOf(textPassword.getText());
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        Call<Boolean> call = retrofitAPI.examinationRegistration(Login);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (!response.isSuccessful()) {
+                    Hint.setText("При регистрации возникла ошибка");
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+                if(response.body().equals(false))
+                {
+                    nextActiv();
+                }
+                else
+                {
+                    Hint.setText( "Пользователь с таким логиным уже зарегистрирован");
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Hint.setText( "При авторизации возникла ошибка: " );
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void nextActiv()
+    {
+        Intent intent = new Intent(this, Activities.class);
+        intent.putExtra("login", textLogin.getText().toString());
+        intent.putExtra("password", textPassword.getText().toString());
+        startActivity(intent);
     }
 
     public void nextAutorization(View view)

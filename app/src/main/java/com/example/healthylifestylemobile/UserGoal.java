@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,12 +23,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class UserGoal extends AppCompatActivity {
     TextView Hint;
     String login, password, idActivities, idGender, age, height, weight, idGoal;
     ProgressBar progressBar;
     CheckBox Ch1, Ch2, Ch3;
     private AdapterMaskGoal pAdapter;
+    float Weight, Height;
+    int IdActivities,  IdGender, Age, IdGoal;
     private List<MaskGoal> listProduct = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,12 @@ public class UserGoal extends AppCompatActivity {
         height = intent.getStringExtra("height");
         weight = intent.getStringExtra("weight");
 
-        Hint.setText("" + login + " " + password + " " + idActivities + " " + idGender +" " + age +" " + height + " " + weight);
+         Weight = Float.parseFloat(weight);
+         Height = Float.parseFloat(height);
+         IdActivities = Integer.parseInt(idActivities);
+         IdGender = Integer.parseInt(idGender);
+         Age = Integer.parseInt(age);
+
 
         Ch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -142,6 +156,7 @@ public class UserGoal extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
     }
+    Calories calories = new Calories();
 
     public void nexWithCalories(View view)
     {
@@ -150,16 +165,23 @@ public class UserGoal extends AppCompatActivity {
         if(Ch1.isChecked() == true)
         {
             idGoal = "1";
-            Intent intent = new Intent(this, HomePageWithCalories.class);
-            intent.putExtra("login", login);
-            intent.putExtra("password", password);
-            intent.putExtra("idActivities", idActivities);
-            intent.putExtra("idGender", idGender);
-            intent.putExtra("age", age);
-            intent.putExtra("height", height);
-            intent.putExtra("weight", weight);
-            intent.putExtra("idGoal", idGoal);
-            startActivity(intent);
+            IdGoal = Integer.parseInt(idGoal);
+            float calor =  calories.CaloriesUser( IdGender,  Height,  Weight,
+             Age,  IdActivities,  IdGoal);
+            postDataUser(IdGender, login, Weight ,Height,
+                    IdActivities,IdGoal, calor, Age, password );
+
+
+//            Intent intent = new Intent(this, HomePageWithCalories.class);
+//            intent.putExtra("login", login);
+//            intent.putExtra("password", password);
+//            intent.putExtra("idActivities", idActivities);
+//            intent.putExtra("idGender", idGender);
+//            intent.putExtra("age", age);
+//            intent.putExtra("height", height);
+//            intent.putExtra("weight", weight);
+//            intent.putExtra("idGoal", idGoal);
+//            startActivity(intent);
             progressBar.setVisibility(View.GONE);
         }
         if(Ch2.isChecked() == true)
@@ -197,6 +219,45 @@ public class UserGoal extends AppCompatActivity {
             Hint.setText( "Необходимо выбрать цель");
             progressBar.setVisibility(View.GONE);
         }
-
     }
+
+    private void postDataUser(int IdGender, String login,  float Weight , float Height,
+                              int IdActivities,int IdGoal, float calor,
+                              int Age, String password){
+        progressBar.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        UserModel modal = new UserModel(0, IdGender, login, Weight,
+                Height, IdActivities, IdGoal, calor, 0,
+                Age,password, 0, 0);
+
+        Call<UserModel> call = retrofitAPI.createUser(modal);
+
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                if(!response.isSuccessful())
+                {
+                    Hint.setText("При регистрации пользователя возникла ошибка");
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+                Toast.makeText(UserGoal.this, "Пользователь успешно зарегистрирован", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                Intent myIntent = new Intent(UserGoal.this, HomePageWithCalories.class);
+                UserGoal.this.startActivity(myIntent);
+            }
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Hint.setText("При регистрации пользователя возникла ошибка: ");
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
 }

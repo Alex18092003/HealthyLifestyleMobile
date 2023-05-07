@@ -52,7 +52,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:theme="@style/MyCheckBox"
                     android:textSize="20dp"
-
+android:fontFamily="@font/comforta"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toTopOf="@+id/GenderG"
                     app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Женский"
                 android:checked="false"
-
+                android:fontFamily="@font/comforta"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -32,7 +32,6 @@ public class UserDataWeight extends AppCompatActivity {
 
 
         Hint= findViewById(R.id.Hint);
-        Hint.setText("" + login + " " + password + " " + idActivities + " " + idGender +" " + age +" " + height);
         textWeight= findViewById(R.id.textWeight);
         progressBar = findViewById(R.id.pbLoading);
         textWeight.setOnFocusChangeListener((v, hasFocus) -> {
