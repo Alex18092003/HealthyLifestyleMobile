@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuAllCalories"
+        android:title="Счетчик" />
+
+    <item android:id="@+id/menuProfile"
+        android:title="Профиль"/>
+
+    <item android:id="@+id/menuRecepis"
+
+        android:title="Рецепты"/>
+
+    <item android:id="@+id/menuDiary"
+
+        android:title="Дневник"/>
+
+
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/menuExitAccount"
+
+                android:title="Выйти из учетной записи" />
+        </menu>
+    </item>
+</menu>

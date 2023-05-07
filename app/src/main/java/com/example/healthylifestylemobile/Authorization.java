@@ -97,6 +97,9 @@ public class Authorization extends AppCompatActivity {
                 {
 
                         Intent intent = new Intent(Authorization.this, HomePageWithCalories.class);
+                    Bundle b = new Bundle();
+                    b.putInt("key", response.body().getUserId());
+                    intent.putExtras(b);
                         startActivity(intent);
 
                 }

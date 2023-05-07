@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/menuAllCalories">
+
+    <fragment
+        android:id="@+id/menuAllCalories"
+        android:name="com.example.healthylifestylemobile.AllPlacesPerehodFragment"
+        android:label="Счетчик"
+        tools:layout="@layout/fragment_all_places_perehod" />
+
+    <fragment
+        android:id="@+id/menuRecepis"
+        android:name="com.example.healthylifestylemobile.UserProfilePerehodFragment"
+        android:label="Личный кабинет"
+        tools:layout="@layout/fragment_user_profile_perehod" />
+    <fragment
+        android:id="@+id/menuProfile"
+        android:name="com.example.healthylifestylemobile.RecepisPerehodFragment"
+        android:label="Личный кабинет"
+        tools:layout="@layout/fragment_recepis_perehod" />
+
+    <fragment
+        android:id="@+id/menuDiary"
+        android:name="com.example.healthylifestylemobile.DiaryPerehodFragment"
+        android:label="Личный кабинет"
+        tools:layout="@layout/fragment_diary_perehod" />
+
+    <fragment
+        android:id="@+id/menuExitAccount"
+        android:name="com.example.healthylifestylemobile.ExitFragment"
+        android:label="Выход"
+        tools:layout="@layout/fragment_exit" />
+</navigation>
