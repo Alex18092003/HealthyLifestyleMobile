@@ -1,7 +1,6 @@
 package com.example.healthylifestylemobile;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -13,8 +12,6 @@ public interface RetrofitAPI {
 //    @GET("Users")
 //    Call<UserModel> updateUser(@Query("id") int id, @Body Mask mask);
 
-    @GET("Users")
-    Call<UserModel> createUser(@Body ModelSendUser ModelSendUser);
 //    @GET("Users")
 //    Call<UserModel> getUser(@Body UserModel UserModel);
 

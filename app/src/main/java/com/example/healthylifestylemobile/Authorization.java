@@ -73,8 +73,8 @@ public class Authorization extends AppCompatActivity {
     private void callLogin()
     {
         progressBar.setVisibility(View.VISIBLE);
-        String login = String.valueOf(textLogin.getText());
-        String password = String.valueOf(textPassword.getText());
+        String Login = String.valueOf(textLogin.getText());
+        String Password = String.valueOf(textPassword.getText());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -82,10 +82,7 @@ public class Authorization extends AppCompatActivity {
 
 
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-
-        //ModelSendUser modelSendUser = new ModelSendUser(login, password);
-        //Call<UserModel> call = retrofitAPI.createUser(modelSendUser);
-        Call<UserModel> call = retrofitAPI.Login(login, password);
+        Call<UserModel> call = retrofitAPI.Login(Login, Password);
 
         call.enqueue(new Callback<UserModel>() {
             @Override
@@ -98,10 +95,10 @@ public class Authorization extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if(response.body() != null)
                 {
-                    if(response.body().getLogin() == "6") {
+
                         Intent intent = new Intent(Authorization.this, HomePageWithCalories.class);
                         startActivity(intent);
-                    }
+
                 }
                 else
                 {

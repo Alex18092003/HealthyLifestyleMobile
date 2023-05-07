@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/fields_input"
                 android:hint="Введите свой вес"
+                android:inputType="numberDecimal"
                 android:fontFamily="@font/comforta"
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
