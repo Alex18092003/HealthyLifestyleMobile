@@ -54,25 +54,35 @@ public class UserDataHeight extends AppCompatActivity {
 
     public void nextWeight(View view)
     {
+
         progressBar.setVisibility(View.VISIBLE);
         String height = String.valueOf(textHeight.getText());
-        if(height.replaceAll("\\s+", " ").equals(""))
-        {
-            Hint.setText("Необходимо ввести свой вес");
-            progressBar.setVisibility(View.GONE);
-            return;
-        }
-        else {
-            Intent intent = new Intent(this, UserDataWeight.class);
-            intent.putExtra("login", login);
-            intent.putExtra("password", password);
-            intent.putExtra("idActivities", idActivities);
-            intent.putExtra("idGender", idGender);
-            intent.putExtra("age", age);
-            intent.putExtra("height", textHeight.getText().toString());
-            startActivity(intent);
-            progressBar.setVisibility(View.GONE);
-        }
+
+            if (height.replaceAll("\\s+", " ").equals("")) {
+                Hint.setText("Необходимо ввести свой вес");
+                progressBar.setVisibility(View.GONE);
+                return;
+            } else {
+                final Float value = Float.valueOf(height);
+                if(value < 30 || value > 500)
+                {
+                    Hint.setText("Вес введен некорректно");
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+                else {
+                    Intent intent = new Intent(this, UserDataWeight.class);
+                    intent.putExtra("login", login);
+                    intent.putExtra("password", password);
+                    intent.putExtra("idActivities", idActivities);
+                    intent.putExtra("idGender", idGender);
+                    intent.putExtra("age", age);
+                    intent.putExtra("height", textHeight.getText().toString());
+                    startActivity(intent);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+
 
     }
 }

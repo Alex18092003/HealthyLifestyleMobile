@@ -112,9 +112,7 @@ public class Registration extends AppCompatActivity {
         else
         {
             callRegistration();
-
             progressBar.setVisibility(View.GONE);
-
         }
     }
 
@@ -144,14 +142,14 @@ public class Registration extends AppCompatActivity {
                 }
                 else
                 {
-                    Hint.setText( "Пользователь с таким логиным уже зарегистрирован");
+                    Hint.setText( "Пользователь с таким логином уже зарегистрирован");
                     progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Hint.setText( "При авторизации возникла ошибка: " );
+                Hint.setText( "При регистрации возникла ошибка" );
                 progressBar.setVisibility(View.GONE);
             }
         });

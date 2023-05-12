@@ -25,6 +25,7 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/clFildsInput"
             app:layout_constraintTop_toTopOf="parent"></TextView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -172,7 +173,6 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/Hint"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
@@ -208,9 +208,6 @@
                 app:layout_constraintEnd_toStartOf="@+id/Entry"
                 app:layout_constraintStart_toStartOf="parent"
                 />
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

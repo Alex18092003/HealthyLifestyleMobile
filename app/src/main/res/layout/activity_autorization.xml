@@ -25,6 +25,7 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/clFildsInput"
             app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,6 +49,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/fields_input"
             android:hint="Логин"
+            android:textColor="@color/black"
             android:fontFamily="@font/comforta"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +63,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/fields_input"
             android:hint="Пароль"
+            android:textColor="@color/black"
             android:fontFamily="@font/comforta"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +95,7 @@
             ></TextView>
 
         <ProgressBar
+
             android:id="@+id/pbLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,6 +129,7 @@
             android:gravity="center"
             android:text="ИЛИ"
             android:padding="15dp"
+            android:textColor="@color/black"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +156,7 @@
             android:padding="15dp"
             android:textColor="@color/black"
             android:fontFamily="@font/comforta"
-            android:text="Зарегистрируйтесь, чтобы получить доступ к множеству рецептов и модулем расчета калорий и БЖУ"
+            android:text="Зарегистрируйтесь, чтобы получить доступ к множеству рецептов и модулю расчета калорий и БЖУ"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

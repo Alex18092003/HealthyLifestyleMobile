@@ -21,6 +21,7 @@
             android:gravity="center"
             android:fontFamily="@font/comforta"
             android:text="Ваша цель?"
+            app:layout_constraintBottom_toTopOf="@+id/clFildsInput"
             android:textSize="40dp"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"

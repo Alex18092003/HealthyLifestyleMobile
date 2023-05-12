@@ -1,11 +1,36 @@
 package com.example.healthylifestylemobile;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +70,16 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
+    public static UserModel userModel;
+
+    ProgressBar progressBar;
+    EditText etextRost, etextVes,
+            etextAge;
+
+    Button Entry;
+    TextView Hint;
+    Spinner spActive, spGoal;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +88,338 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    ConstraintLayout clGoal, clActive;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        progressBar = v.findViewById(R.id.pbLoading);
+        etextRost = (EditText) v.findViewById(R.id.etextRost);
+        etextVes = (EditText) v.findViewById(R.id.etextVes);
+        etextAge = (EditText) v.findViewById(R.id.etextAge);
+
+        clGoal =  v.findViewById(R.id.clGoal);
+        clActive =  v.findViewById(R.id.clActive);
+
+        spActive = v.findViewById(R.id.spActive);
+        spGoal = v.findViewById(R.id.spGoal);
+
+        Hint = v.findViewById(R.id.Hint);
+
+        Entry = v.findViewById(R.id.Entry);
+        Entry.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                ButtonEdit();
+            }
+        });
+
+
+
+        new GetActivities().execute();
+        new GetGoals().execute();
+//        callGetUser();
+        return v;
+    }
+    String DateOfBirth, Weight, Height, Activ, Goal;
+    public void callGetUser()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<UserModel> call = retrofitAPI.getDATAUser(HomePageWithCalories.index);
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+
+                if(!response.isSuccessful())
+                {
+                    Hint.setText("При выводе данных возникла ошибка");
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+                userModel = new UserModel(0, response.body().getGenderId(), response.body().getLogin(), response.body().getWeight(), response.body().getHeight(),
+                        response.body().getActivityId(),  response.body().getGoalId(),  response.body().getCalories(),
+                        response.body().getSquirrels(), response.body().getDateOfBirth(), response.body().getPassword(),
+                        response.body().getFats(), response.body().getCarbohydrates());
+                Height = String.valueOf(response.body().getHeight());
+                Weight= String.valueOf(response.body().getWeight());
+                etextRost.setText(Weight);
+                etextVes.setText(Height);
+                DateOfBirth = String.valueOf(response.body().getDateOfBirth());
+                etextAge.setText(DateOfBirth);
+                spActive.setSelection(getPositionActiv(response.body().getActivityId()));
+                spGoal.setSelection(getPositionGoal(response.body().getGoalId()));
+                progressBar.setVisibility(View.GONE);
+            }
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Hint.setText("При выводе данных возникла ошибка");
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    String[][] ActiveArray;
+    String[][] GoalArray;
+
+    private class GetActivities extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Activities");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                progressBar.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()];
+                ActiveArray = new String[tempArray.length()][2];
+                for (int i = 0;i<tempArray.length();i++)
+                {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i]=productJson.getString("Title");
+                    ActiveArray[i][0] = productJson.getString("ActivityId");
+                    ActiveArray[i][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spActive.setAdapter(adapter);
+                callGetUser();
+                progressBar.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+                Hint.setText("При выводе данных активности возникла ошибка!");
+            }
+        }
+    }
+
+    private class GetGoals extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Goals");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                progressBar.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()];
+                GoalArray = new String[tempArray.length()][2];
+                for (int i = 0;i<tempArray.length();i++)
+                {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i]=productJson.getString("Title");
+                    GoalArray[i][0] = productJson.getString("GoalId");
+                    GoalArray[i][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spGoal.setAdapter(adapter);
+//                callGetUser();
+                progressBar.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+                Hint.setText("При выводе данных цели возникла ошибка!");
+            }
+        }
+    }
+
+    public void ButtonEdit()
+    {
+        if(clGoal .getVisibility() == View.GONE) {
+            etextRost.setEnabled(true);
+            etextVes.setEnabled(true);
+            etextAge.setEnabled(true);
+            Entry.setText("Сохранить");
+            etextRost.getForeground().setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+            etextVes.getForeground().setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+            etextAge.getForeground().setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+            clGoal.setVisibility(View.VISIBLE);
+            clActive.setVisibility(View.VISIBLE);
+        }
+        else {
+            updData();
+        }
+    }
+
+    public void updData()
+    {
+        if(etextRost.getText().toString().equals("") ||
+                etextVes.getText().toString().equals("") ||
+                etextAge.getText().toString().equals("") )
+        {
+            Hint.setText("Заполните все поля");
+            return;
+        }
+        String age = String.valueOf(etextAge.getText());
+        String rost = String.valueOf(etextRost.getText());
+        String ves = String.valueOf(etextVes.getText());
+        final int value = Integer.valueOf(age);
+        if(value < 14 || value > 80)
+        {
+            Hint.setText("Возраст введен некорректно");
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+        final Float value2 = Float.valueOf(ves);
+        if(value2 < 30 || value2 > 500)
+        {
+            Hint.setText("Вес введен некорректно");
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+        final Float value3 = Float.valueOf(rost);
+        if(value3 < 50 || value3 > 265)
+        {
+            Hint.setText("Рост введен некорректно");
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        etextRost.setEnabled(false);
+        etextVes.setEnabled(false);
+        etextAge.setEnabled(false);
+        Entry.setText("Редактировать");
+        etextRost.getForeground().setColorFilter(Color.parseColor("#70274025"), PorterDuff.Mode.SRC_ATOP);
+        etextVes.getForeground().setColorFilter(Color.parseColor("#70274025"), PorterDuff.Mode.SRC_ATOP);
+        etextAge.getForeground().setColorFilter(Color.parseColor("#70274025"), PorterDuff.Mode.SRC_ATOP);
+        clGoal.setVisibility(View.GONE);
+        clActive.setVisibility(View.GONE);
+
+        callPUTDataMethod(
+                Float.parseFloat(etextVes.getText().toString()),
+                Float.parseFloat(etextRost.getText().toString()),
+                getIdActive(spActive.getSelectedItem().toString()),
+                getIdTGoal(spGoal.getSelectedItem().toString()),
+                Integer.parseInt(etextAge.getText().toString()));
+    }
+
+    private void callPUTDataMethod(
+                                   Float Weight,
+                                   Float Height,
+                                   int ActivityId,
+                                   int GoalId,
+                                   int  DateOfBirth) {
+
+        progressBar.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+
+        UserModel modal = new UserModel(0,0,
+                null, Weight, Height, ActivityId, GoalId,
+                0, 0, DateOfBirth,null,
+                0, 0);
+
+        Call<UserModel> call = retrofitAPI.updateUser(HomePageWithCalories.index, modal);
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                progressBar.setVisibility(View.GONE);
+                if(!response.isSuccessful())
+                {
+                    Hint.setText( "При изменение данных возникла ошибка");
+                    return;
+                }
+                Toast.makeText(getActivity(),"Данные изменены", Toast.LENGTH_LONG).show();;
+            }
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При изменение записи возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private int getIdTGoal(String typeLocality)
+    {
+        for (int i = 0; i < GoalArray.length; i++)
+        {
+            if(GoalArray[i][1].equals(typeLocality))
+            {
+                return Integer.parseInt(GoalArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
+    private int getPositionGoal(int id_country)
+    {
+        for (int i = 0; i < GoalArray.length; i++)
+        {
+            if(GoalArray[i][0] == String.valueOf(id_country))
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+    private int getPositionActiv(int id_typeLocality)
+    {
+        for (int i = 0; i < ActiveArray.length; i++)
+        {
+            if(ActiveArray[i][0] == String.valueOf(id_typeLocality))
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private int getIdActive(String country)
+    {
+        for (int i = 0; i < ActiveArray.length; i++)
+        {
+            if(ActiveArray[i][1].equals(country))
+            {
+                return Integer.parseInt(ActiveArray[i][0]);
+            }
+        }
+        return 0;
     }
 }

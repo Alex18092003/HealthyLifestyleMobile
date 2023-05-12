@@ -3,6 +3,7 @@
 
     <item
         android:id="@+id/menuAllCalories"
+        
         android:title="Счетчик" />
 
     <item android:id="@+id/menuProfile"

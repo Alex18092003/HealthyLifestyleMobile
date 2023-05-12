@@ -62,14 +62,23 @@ public class UserDataAge extends AppCompatActivity {
             return;
         }
         else {
-            Intent intent = new Intent(this, UserDataHeight.class);
-            intent.putExtra("login", login);
-            intent.putExtra("password", password);
-            intent.putExtra("idActivities", idActivities);
-            intent.putExtra("idGender", idGender);
-            intent.putExtra("age", textAge.getText().toString());
-            startActivity(intent);
-            progressBar.setVisibility(View.GONE);
+            final int value = Integer.valueOf(age);
+            if(value < 14 || value > 80)
+            {
+                Hint.setText("Возраст введен некорректно");
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
+            else {
+                Intent intent = new Intent(this, UserDataHeight.class);
+                intent.putExtra("login", login);
+                intent.putExtra("password", password);
+                intent.putExtra("idActivities", idActivities);
+                intent.putExtra("idGender", idGender);
+                intent.putExtra("age", textAge.getText().toString());
+                startActivity(intent);
+                progressBar.setVisibility(View.GONE);
+            }
         }
 
     }

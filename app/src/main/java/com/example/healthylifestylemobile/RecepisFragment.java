@@ -1,11 +1,24 @@
 package com.example.healthylifestylemobile;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,10 +67,100 @@ public class RecepisFragment extends Fragment {
         }
     }
 
+    private List<RecepesModel> listRecepes = new ArrayList<>();
+
+    ListView listView;
+    AdapterRecepes pAdapter;
+    ProgressBar loading;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recepis, container, false);
+        View view = inflater.inflate(R.layout.fragment_recepis, container, false);
+
+        loading = view.findViewById(R.id.pbLoading);
+        loading.setVisibility(View.VISIBLE);
+        ListView ivProducts = view.findViewById(R.id.lvData);
+        pAdapter = new AdapterRecepes(getActivity(), listRecepes);
+        ivProducts.setAdapter(pAdapter);
+        listView = view.findViewById(R.id.lvData);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                int index = (int)id;
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                SinglePlaceFragment fragment = new SinglePlaceFragment(index, "UserPlace");
+//                ft.replace(R.id.perehodAddPlace, fragment);
+//                ft.commit();
+//            }
+//        });
+        new GetRecepes().execute();
+        return view;
+    }
+
+    private class GetRecepes extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listRecepes.clear();
+                pAdapter.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+                for (int i = 0;i<tempArray.length();i++)
+                {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    RecepesModel tempProduct = new RecepesModel(
+                            productJson.getInt("RecipeId"),
+                            productJson.getString("Title"),
+                            productJson.getInt("MinutesOfCooking"),
+                            productJson.getString("Description"),
+                            productJson.getString("Comment"),
+                            productJson.getString("Photo"),
+                            productJson.getInt("RecipeType"),
+                            productJson.getInt("MealId"),
+                            productJson.getInt("DietId"),
+                            productJson.getInt("SpecificsId"),
+                            productJson.getInt("DifficultyId"),
+                            productJson.getInt("CookingId"),
+                            productJson.getInt("KitchenId"),
+                            productJson.optDouble("Calories"),
+                            productJson.getDouble("Squirrels"),
+                            productJson.getDouble("Fats"),
+                            (float) productJson.getDouble("Carbohydrates")
+                    );
+                    listRecepes.add(tempProduct);
+                    pAdapter.notifyDataSetInvalidated();
+                }
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
     }
 }

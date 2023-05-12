@@ -18,7 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageWithCalories extends AppCompatActivity {
-    TextView textCaloriesNow, textCalories;
+
     public static int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class HomePageWithCalories extends AppCompatActivity {
 
         Bundle arguments = getIntent().getExtras();
         index = arguments.getInt("key");
+
 
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);

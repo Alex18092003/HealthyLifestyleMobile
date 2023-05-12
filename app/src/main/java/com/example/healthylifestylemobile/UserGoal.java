@@ -161,7 +161,6 @@ public class UserGoal extends AppCompatActivity {
     public void nexWithCalories(View view)
     {
         progressBar.setVisibility(View.VISIBLE);
-
         if(Ch1.isChecked() == true)
         {
             idGoal = "1";
@@ -170,48 +169,26 @@ public class UserGoal extends AppCompatActivity {
              Age,  IdActivities,  IdGoal);
             postDataUser(IdGender, login, Weight ,Height,
                     IdActivities,IdGoal, calor, Age, password );
-
-
-//            Intent intent = new Intent(this, HomePageWithCalories.class);
-//            intent.putExtra("login", login);
-//            intent.putExtra("password", password);
-//            intent.putExtra("idActivities", idActivities);
-//            intent.putExtra("idGender", idGender);
-//            intent.putExtra("age", age);
-//            intent.putExtra("height", height);
-//            intent.putExtra("weight", weight);
-//            intent.putExtra("idGoal", idGoal);
-//            startActivity(intent);
             progressBar.setVisibility(View.GONE);
         }
         if(Ch2.isChecked() == true)
         {
             idGoal = "2";
-            Intent intent = new Intent(this, HomePageWithCalories.class);
-            intent.putExtra("login", login);
-            intent.putExtra("password", password);
-            intent.putExtra("idActivities", idActivities);
-            intent.putExtra("idGender", idGender);
-            intent.putExtra("age", age);
-            intent.putExtra("height", height);
-            intent.putExtra("weight", weight);
-            intent.putExtra("idGoal", idGoal);
-            startActivity(intent);
+            IdGoal = Integer.parseInt(idGoal);
+            float calor =  calories.CaloriesUser( IdGender,  Height,  Weight,
+                    Age,  IdActivities,  IdGoal);
+            postDataUser(IdGender, login, Weight ,Height,
+                    IdActivities,IdGoal, calor, Age, password );
             progressBar.setVisibility(View.GONE);
         }
         if(Ch3.isChecked() == true)
         {
             idGoal = "3";
-            Intent intent = new Intent(this, HomePageWithCalories.class);
-            intent.putExtra("login", login);
-            intent.putExtra("assword", password);
-            intent.putExtra("idActivities", idActivities);
-            intent.putExtra("idGender", idGender);
-            intent.putExtra("age", age);
-            intent.putExtra("height", height);
-            intent.putExtra("weight", weight);
-            intent.putExtra("idGoal", idGoal);
-            startActivity(intent);
+            IdGoal = Integer.parseInt(idGoal);
+            float calor =  calories.CaloriesUser( IdGender,  Height,  Weight,
+                    Age,  IdActivities,  IdGoal);
+            postDataUser(IdGender, login, Weight ,Height,
+                    IdActivities,IdGoal, calor, Age, password );
             progressBar.setVisibility(View.GONE);
         }
         if(Ch1.isChecked() == false && Ch2.isChecked() == false &&
@@ -247,9 +224,9 @@ public class UserGoal extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
-                Toast.makeText(UserGoal.this, "Пользователь успешно зарегистрирован", Toast.LENGTH_LONG).show();
+                Toast.makeText(UserGoal.this, "Вы успешно зарегистрированы", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
-                Intent myIntent = new Intent(UserGoal.this, HomePageWithCalories.class);
+                Intent myIntent = new Intent(UserGoal.this, Authorization.class);
                 UserGoal.this.startActivity(myIntent);
             }
             @Override

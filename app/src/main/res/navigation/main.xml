@@ -12,20 +12,20 @@
         tools:layout="@layout/fragment_all_places_perehod" />
 
     <fragment
-        android:id="@+id/menuRecepis"
+        android:id="@+id/menuProfile"
         android:name="com.example.healthylifestylemobile.UserProfilePerehodFragment"
-        android:label="Личный кабинет"
+        android:label="Профиль"
         tools:layout="@layout/fragment_user_profile_perehod" />
     <fragment
-        android:id="@+id/menuProfile"
+        android:id="@+id/menuRecepis"
         android:name="com.example.healthylifestylemobile.RecepisPerehodFragment"
-        android:label="Личный кабинет"
+        android:label="Рецепты"
         tools:layout="@layout/fragment_recepis_perehod" />
 
     <fragment
         android:id="@+id/menuDiary"
         android:name="com.example.healthylifestylemobile.DiaryPerehodFragment"
-        android:label="Личный кабинет"
+        android:label="Дневник"
         tools:layout="@layout/fragment_diary_perehod" />
 
     <fragment

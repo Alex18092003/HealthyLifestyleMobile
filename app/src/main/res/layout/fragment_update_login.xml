@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:fillViewport="true"
+    tools:context=".UpdateLoginFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/v"
+        android:background="@color/m"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/T"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:padding="15dp"
+            android:textSize="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Здесь вы можете изменить свой логин и пароль"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textLogin"
+            ></TextView>
+
+
+        <EditText
+            android:id="@+id/textLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fields_input"
+            android:hint="Логин"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/comforta"
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/T"
+            app:layout_constraintBottom_toTopOf="@+id/textPassword"
+            />
+
+        <EditText
+            android:id="@+id/textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/fields_input"
+            android:hint="Старый пароль"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/comforta"
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textPassword2"
+            app:layout_constraintTop_toBottomOf="@+id/textLogin" />
+
+        <ImageView
+            android:id="@+id/ivVisiblePassword"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:onClick="getVisiblePassword"
+            android:src="@drawable/icon_password_visible1"
+            app:layout_constraintBottom_toBottomOf="@+id/textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/textPassword"
+            app:layout_constraintTop_toTopOf="@+id/textPassword" />
+
+        <EditText
+            android:id="@+id/textPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/fields_input"
+            android:hint="Новый пароль"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/comforta"
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textPassword3"
+            app:layout_constraintTop_toBottomOf="@+id/textPassword" />
+
+        <ImageView
+            android:id="@+id/ivVisiblePassword2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:onClick="getVisiblePassword2"
+            android:src="@drawable/icon_password_visible1"
+            app:layout_constraintBottom_toBottomOf="@+id/textPassword2"
+            app:layout_constraintEnd_toEndOf="@+id/textPassword2"
+            app:layout_constraintTop_toTopOf="@+id/textPassword2" />
+        <EditText
+            android:id="@+id/textPassword3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/fields_input"
+            android:hint="Повторите пароль"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/Hint"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/comforta"
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPassword2" />
+
+        <ImageView
+            android:id="@+id/ivVisiblePassword3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_marginRight="10dp"
+            android:onClick="getVisiblePassword3"
+            android:src="@drawable/icon_password_visible1"
+            app:layout_constraintBottom_toBottomOf="@+id/textPassword3"
+            app:layout_constraintEnd_toEndOf="@+id/textPassword3"
+            app:layout_constraintTop_toTopOf="@+id/textPassword3" />
+
+        <TextView
+            android:id="@+id/Hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:padding="15dp"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPassword3"
+            app:layout_constraintBottom_toTopOf="@+id/pbLoading"
+            ></TextView>
+
+
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/pbLoading"
+            app:layout_constraintTop_toBottomOf="@id/Hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сохранить"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:onClick="nextGender"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintTop_toBottomOf="@+id/pbLoading"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

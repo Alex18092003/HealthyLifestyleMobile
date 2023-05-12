@@ -22,6 +22,7 @@
             android:fontFamily="@font/comforta"
             android:text="Ваш возраст?"
             android:textSize="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/clFildsInput"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +45,7 @@
 
             <EditText
                 android:id="@+id/textAge"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/fields_input"

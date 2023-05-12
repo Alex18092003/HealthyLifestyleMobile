@@ -4,8 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +52,8 @@ public class AllPlacesFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public static UserModel userModel;
+    TextView textCaloriesEat, textCalories;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +67,42 @@ public class AllPlacesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_places, container, false);
+        View v =inflater.inflate(R.layout.fragment_all_places, container, false);
+        textCaloriesEat = (TextView) v.findViewById(R.id.textCaloriesEat);
+        textCalories = (TextView) v.findViewById(R.id.textCalories);
+        callGetUser();
+        return v;
+    }
+
+    public void callGetUser()
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<UserModel> call = retrofitAPI.getCaloriesUser(HomePageWithCalories.index);
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При выводе данных возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                userModel = new UserModel(0, response.body().getGenderId(), response.body().getLogin(), response.body().getWeight(),
+                        response.body().getHeight(), response.body().getActivityId(),
+                        response.body().getGoalId(), response.body().getCalories(),
+                        response.body().getSquirrels(), response.body().getDateOfBirth(), response.body().getPassword(),
+                        response.body().getFats(), response.body().getCarbohydrates());
+                textCalories.setText((int) response.body().getCalories());
+            }
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При выводе данных возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 }

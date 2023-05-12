@@ -3,6 +3,8 @@ package com.example.healthylifestylemobile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Call;
@@ -27,6 +30,8 @@ public class Authorization extends AppCompatActivity {
     TextView Hint;
     ProgressBar progressBar;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,21 +46,48 @@ public class Authorization extends AppCompatActivity {
 
 
         textLogin.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus)
+            if (hasFocus) {
                 textLogin.setHint("");
-            else
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textLogin.setTypeface(typeface);
+            }
+            else {
                 textLogin.setHint("Логин");
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textLogin.setTypeface(typeface);
+            }
         });
         textPassword.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus)
+            if (hasFocus) {
                 textPassword.setHint("");
-            else
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                     typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword.setTypeface(typeface);
+            }
+            else {
                 textPassword.setHint("Пароль");
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                     typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword.setTypeface(typeface);
+            }
         });
+
 
         SharedPreferences prefs = this.getSharedPreferences(
                 "Date", Context.MODE_PRIVATE); // Получение данных о пользователе
     }
+
+
 
     public void nextMain(View v)
     {
@@ -125,11 +157,21 @@ public class Authorization extends AppCompatActivity {
         if(textPassword.getInputType() == 129)
         {
             image.setImageResource(R.drawable.icon_password_not_visible1);
+            Typeface typeface = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                typeface = getResources().getFont(R.font.comforta);
+            }
+            textPassword.setTypeface(typeface);
             textPassword.setInputType(InputType.TYPE_CLASS_TEXT);
         }
         else
         {
             image.setImageResource(R.drawable.icon_password_visible1);
+            Typeface typeface = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                typeface = getResources().getFont(R.font.comforta);
+            }
+            textPassword.setTypeface(typeface);
             textPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
     }
