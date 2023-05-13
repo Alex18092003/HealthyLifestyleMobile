@@ -26,4 +26,7 @@ public interface RetrofitAPI {
 
     @PUT("Users")
     Call<UserModel> updateUser(@Query("id") int id, @Body UserModel userModel);
+
+    @PUT("Users")
+    Call<UserModel> updateLogin(@Query("id") int id, @Body UserModel userModel, @Query("idd") int idd);
 }

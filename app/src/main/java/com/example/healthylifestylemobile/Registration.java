@@ -56,6 +56,7 @@ public class Registration extends AppCompatActivity {
             else
                 textPassword2.setHint("Повторите пароль");
         });
+
     }
 
     public void getVisiblePassword(View v)
@@ -64,6 +65,8 @@ public class Registration extends AppCompatActivity {
         {
             image.setImageResource(R.drawable.icon_password_not_visible1);
             textPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+
+
         }
         else
         {

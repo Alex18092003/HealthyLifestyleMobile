@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,7 +77,7 @@ public class ProfileFragment extends Fragment {
     EditText etextRost, etextVes,
             etextAge;
 
-    Button Entry;
+    Button Entry, LoginPas;
     TextView Hint;
     Spinner spActive, spGoal;
 
@@ -115,11 +116,20 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        LoginPas = v.findViewById(R.id.LoginPas);
+        LoginPas.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                UpdateLoginFragment fragment = new UpdateLoginFragment();
+                ft.replace(R.id.UserProfilePerehod, fragment);
+                ft.commit();
+            }
+        });
 
 
         new GetActivities().execute();
         new GetGoals().execute();
-//        callGetUser();
         return v;
     }
     String DateOfBirth, Weight, Height, Activ, Goal;
@@ -148,17 +158,18 @@ public class ProfileFragment extends Fragment {
                         response.body().getFats(), response.body().getCarbohydrates());
                 Height = String.valueOf(response.body().getHeight());
                 Weight= String.valueOf(response.body().getWeight());
-                etextRost.setText(Weight);
-                etextVes.setText(Height);
+                etextRost.setText(Height);
+                etextVes.setText(Weight);
                 DateOfBirth = String.valueOf(response.body().getDateOfBirth());
                 etextAge.setText(DateOfBirth);
                 spActive.setSelection(getPositionActiv(response.body().getActivityId()));
                 spGoal.setSelection(getPositionGoal(response.body().getGoalId()));
                 progressBar.setVisibility(View.GONE);
+                Hint.setText("");
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
-                Hint.setText("При выводе данных возникла ошибка");
+                Hint.setText("При выводе данных возникла ошибка!");
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -208,6 +219,7 @@ public class ProfileFragment extends Fragment {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spActive.setAdapter(adapter);
                 callGetUser();
+                Hint.setText("");
                 progressBar.setVisibility(View.GONE);
             }
             catch (Exception ignored)
@@ -257,6 +269,7 @@ public class ProfileFragment extends Fragment {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spGoal.setAdapter(adapter);
 //                callGetUser();
+                Hint.setText("");
                 progressBar.setVisibility(View.GONE);
             }
             catch (Exception ignored)
@@ -265,6 +278,8 @@ public class ProfileFragment extends Fragment {
             }
         }
     }
+
+
 
     public void ButtonEdit()
     {
@@ -366,6 +381,7 @@ public class ProfileFragment extends Fragment {
                     Hint.setText( "При изменение данных возникла ошибка");
                     return;
                 }
+                Hint.setText("");
                 Toast.makeText(getActivity(),"Данные изменены", Toast.LENGTH_LONG).show();;
             }
             @Override

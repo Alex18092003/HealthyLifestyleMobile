@@ -14,22 +14,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/bb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textLogin"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/Back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Назад"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:onClick="nextBack"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/T"
+            />
         <TextView
             android:id="@+id/T"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:textColor="@color/black"
-            android:padding="15dp"
+
             android:textSize="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:text="Здесь вы можете изменить свой логин и пароль"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Back"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/textLogin"
+
+            app:layout_constraintBottom_toBottomOf="parent"
             ></TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <EditText
@@ -47,7 +75,7 @@
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/T"
+            app:layout_constraintTop_toBottomOf="@+id/bb"
             app:layout_constraintBottom_toTopOf="@+id/textPassword"
             />
 
@@ -62,7 +90,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
-            android:fontFamily="@font/comforta"
+            android:fontFamily="@font/comfortaa"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +119,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"
-            android:fontFamily="@font/comforta"
+            android:fontFamily="@font/comfortaa"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +148,7 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toTopOf="@+id/Hint"
             android:layout_marginBottom="10dp"
-            android:fontFamily="@font/comforta"
+            android:fontFamily="@font/comfortaa"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +186,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/pbLoading"
+            app:layout_constraintBottom_toTopOf="@+id/Entry"
             app:layout_constraintTop_toBottomOf="@id/Hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

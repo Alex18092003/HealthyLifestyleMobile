@@ -1,5 +1,6 @@
 package com.example.healthylifestylemobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,9 @@ public class ExitFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+        startActivity(new Intent(getActivity(), Authorization.class));
     }
 
     @Override

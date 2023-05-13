@@ -63,9 +63,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/fields_input"
+                android:fontFamily="@font/comfortaa"
                 android:hint="Пароль"
                 android:textColor="@color/black"
-                android:fontFamily="@font/comforta"
+
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,9 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/fields_input"
+                android:fontFamily="@font/comfortaa"
+
                 android:hint="Повторите пароль"
                 android:textColor="@color/black"
-                android:fontFamily="@font/comforta"
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,14 +113,13 @@
                 android:id="@+id/Hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/red"
+                android:fontFamily="@font/comfortaa"
                 android:padding="15dp"
-                android:fontFamily="@font/comforta"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toTopOf="@+id/pbLoading"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textPassword2"
-                app:layout_constraintBottom_toTopOf="@+id/pbLoading"
-                ></TextView>
+                app:layout_constraintTop_toBottomOf="@+id/textPassword2"></TextView>
 
             <ProgressBar
                 android:id="@+id/pbLoading"

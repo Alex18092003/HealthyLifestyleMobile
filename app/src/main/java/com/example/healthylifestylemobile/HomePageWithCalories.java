@@ -28,8 +28,6 @@ public class HomePageWithCalories extends AppCompatActivity {
         Bundle arguments = getIntent().getExtras();
         index = arguments.getInt("key");
 
-
-
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
         findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
             @Override
