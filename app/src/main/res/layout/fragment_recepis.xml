@@ -1,44 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:fillViewport="true"
     android:background="@color/white"
     tools:context=".RecepisFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/v"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/lvData"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/clBtn"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/pbLoading"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/comforta"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="5dp"
+            android:id="@+id/clVes"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/comforta"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/clVes2"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:fontFamily="@font/comforta"
+                android:textColor="@color/black"
+                android:text="Поиск по названию"
+                android:textSize="14dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/textVes"
+                app:layout_constraintEnd_toStartOf="@+id/etextTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                ></TextView>
+
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/etextTitle"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="10dp"
+                android:textColor="@color/black"
+                android:foreground="@color/gg"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/fields_input"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/clVes2"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/comforta"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/clVes3"
+            app:layout_constraintTop_toBottomOf="@+id/clVes"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spMeals"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="10dp"
+
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spRecipeTypes"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Spinner
+                android:id="@+id/spRecipeTypes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/spMeals"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/clVes3"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/comforta"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/clVes4"
+            app:layout_constraintTop_toBottomOf="@+id/clVes2"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spSpecifics"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spPreparations"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Spinner
+                android:id="@+id/spPreparations"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/spSpecifics"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/clVes4"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/comforta"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/clVes5"
+            app:layout_constraintTop_toBottomOf="@+id/clVes3"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spKitchens"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spDifficulties"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Spinner
+                android:id="@+id/spDifficulties"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/spKitchens"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/clVes5"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/comforta"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/clVes4"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spMinutesOfCooking"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spDiets"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Spinner
+                android:id="@+id/spDiets"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/gg"
+                android:fontFamily="@font/comforta"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/spMinutesOfCooking"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:id="@+id/pbLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clBtn"
+            app:layout_constraintBottom_toTopOf="@+id/sk"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pbLoading"
+            android:fillViewport="true"
+            android:id="@+id/sk"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/white"
+            tools:ignore="MissingConstraints">
 
+
+        <GridView
+            android:id="@+id/lvData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:numColumns="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

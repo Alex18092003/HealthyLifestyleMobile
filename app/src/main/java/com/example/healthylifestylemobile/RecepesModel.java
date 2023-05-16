@@ -19,6 +19,7 @@ public class RecepesModel {
     private double Squirrels;
     private double Fats;
     private double Carbohydrates;
+    private String PhotoAnd;
 
     public RecepesModel(int RecipeId, String Title,
                         int MinutesOfCooking, String Description,
@@ -28,7 +29,7 @@ public class RecepesModel {
                         int SpecificsId, int DifficultyId,
                         int CookingId, int KitchenId,
                         double Calories , double Squirrels,
-                        double Fats, float Carbohydrates) {
+                        double Fats, double Carbohydrates, String PhotoAnd) {
         this.RecipeId = RecipeId;
         this.Title = Title;
         this.MinutesOfCooking = MinutesOfCooking;
@@ -46,6 +47,7 @@ public class RecepesModel {
         this.Squirrels = Squirrels;
         this.Fats = Fats;
         this.Carbohydrates = Carbohydrates;
+        this.PhotoAnd = PhotoAnd;
     }
 
     public void setRecipeId(int RecipeId)
@@ -116,6 +118,11 @@ public class RecepesModel {
     {
         this.Carbohydrates = Carbohydrates;
     }
+    public void setPhotoAnd(String PhotoAnd)
+    {
+        this.PhotoAnd = PhotoAnd;
+    }
+
 
     public int getRecipeId()
     {
@@ -184,6 +191,10 @@ public class RecepesModel {
     public double getCarbohydrates()
     {
         return Carbohydrates;
+    }
+    public String getPhotoAnd()
+    {
+        return PhotoAnd;
     }
 
 }

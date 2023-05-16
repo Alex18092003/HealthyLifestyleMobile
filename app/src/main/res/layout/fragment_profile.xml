@@ -309,7 +309,7 @@
             android:layout_height="wrap_content"
             android:text="Изменить логин и пароль"
             android:textAllCaps="false"
-            android:textSize="15dp"
+            android:textSize="10dp"
             android:padding="10dp"
 
             android:fontFamily="@font/comforta"

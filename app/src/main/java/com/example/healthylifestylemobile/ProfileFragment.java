@@ -153,7 +153,8 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 userModel = new UserModel(0, response.body().getGenderId(), response.body().getLogin(), response.body().getWeight(), response.body().getHeight(),
-                        response.body().getActivityId(),  response.body().getGoalId(),  response.body().getCalories(),
+                        response.body().getActivityId(),
+                        response.body().getGoalId(),  response.body().getCalories(),
                         response.body().getSquirrels(), response.body().getDateOfBirth(), response.body().getPassword(),
                         response.body().getFats(), response.body().getCarbohydrates());
                 Height = String.valueOf(response.body().getHeight());
@@ -382,7 +383,7 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 Hint.setText("");
-                Toast.makeText(getActivity(),"Данные изменены", Toast.LENGTH_LONG).show();;
+                Toast.makeText(getActivity(),"Данные изменены", Toast.LENGTH_LONG).show();
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {

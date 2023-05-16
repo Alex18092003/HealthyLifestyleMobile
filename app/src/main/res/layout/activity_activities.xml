@@ -57,6 +57,7 @@
                     android:layout_width="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_height="match_parent"
+                    android:id="@+id/G"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/lvData">
@@ -66,12 +67,11 @@
                         android:id="@+id/Ch1"
 
                         android:checked="false"
-                        android:layout_marginTop="33dp"
                         android:layout_width="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_height="wrap_content"
                         android:theme="@style/MyCheckBox"
-                        app:layout_constraintBottom_toTopOf="@+id/Ch2"
+
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         >
@@ -82,10 +82,10 @@
 
                         android:checked="false"
                         android:layout_width="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/Ch3"
+
                         android:layout_height="wrap_content"
                         android:theme="@style/MyCheckBox"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginTop="35dp"
                         app:layout_constraintTop_toBottomOf="@+id/Ch1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -96,10 +96,10 @@
                         android:id="@+id/Ch3"
                         android:checked="false"
 
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="40dp"
                         android:theme="@style/MyCheckBox"
                         android:layout_width="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/Ch4"
+
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/Ch2"
                         app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +114,7 @@
                         android:layout_marginTop="30dp"
                         android:theme="@style/MyCheckBox"
                         android:layout_width="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/Ch5"
+
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/comforta"
                         app:layout_constraintTop_toBottomOf="@+id/Ch3"
@@ -145,9 +145,9 @@
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
-
+                    android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/Ch1"
+                    app:layout_constraintStart_toEndOf="@+id/G"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

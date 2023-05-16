@@ -29,4 +29,25 @@ public interface RetrofitAPI {
 
     @PUT("Users")
     Call<UserModel> updateLogin(@Query("id") int id, @Body UserModel userModel, @Query("idd") int idd);
+
+    @GET("Recipes/{id}")
+    Call<RecepesModel> getDATARecepes(@Query("id") int id);
+
+    @PUT("Recipes")
+    Call<RecepesModel> updateRecepis(@Query("id") int id, @Body RecepesModel recepesModel);
+
+    @GET("Steps/{index}")
+    Call<StepsModel> getDATASteps(@Query("id") int id);
+
+    @PUT("Steps")
+    Call<StepsModel> updateSteps(@Query("id") int id, @Body StepsModel stepsModel);
+
+    @GET("IngredientForRecipes")
+    Call<IngredientForRecipeModel> getDATAIng(@Query("index") int index);
+
+    @GET("Steps")
+    Call<StepsModel> getDATAStep(@Query("id") int id);
+
+    @GET("Recipes/{id}")
+    Call<RecepesModel> getDATARecip(@Query("id") int id);
 }

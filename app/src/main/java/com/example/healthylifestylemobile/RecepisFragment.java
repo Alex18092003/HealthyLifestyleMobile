@@ -5,10 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,7 +65,7 @@ public class RecepisFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    TextView textVes;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +77,17 @@ public class RecepisFragment extends Fragment {
 
     private List<RecepesModel> listRecepes = new ArrayList<>();
 
-    ListView listView;
+    GridView listView;
     AdapterRecepes pAdapter;
     ProgressBar loading;
+Button Entry;
 
-
+    Spinner spDiets, spMinutesOfCooking, spDifficulties,
+            spKitchens, spPreparations, spSpecifics,
+            spRecipeTypes, spMeals;
+    SearchView etextTitle;
+    String textSearch;
+    int i1 = 0, i2 = 0, i3 = 0, i4 = 0,i5 = 0, i6 = 0,i7 = 0, i8 = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,40 +96,595 @@ public class RecepisFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recepis, container, false);
 
         loading = view.findViewById(R.id.pbLoading);
-        loading.setVisibility(View.VISIBLE);
-        ListView ivProducts = view.findViewById(R.id.lvData);
+        //loading.setVisibility(View.VISIBLE);
+
+        //textVes= view.findViewById(R.id.textVes);
+        spDiets = view.findViewById(R.id.spDiets);
+        spDiets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(i1 > 0)
+                {
+                    new GetR().execute();
+                }
+                i1++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spDifficulties = view.findViewById(R.id.spDifficulties);
+        spDifficulties.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(i3 > 0)
+                {
+                    new GetR().execute();
+                }
+                i3++;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spKitchens = view.findViewById(R.id.spKitchens);
+        spKitchens.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(i4 > 0)
+                {
+                    new GetR().execute();
+                }
+                i4++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spPreparations = view.findViewById(R.id.spPreparations);
+        spPreparations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(i5 > 0)
+                {
+                    new GetR().execute();
+                }
+                i5++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spSpecifics = view.findViewById(R.id.spSpecifics);
+        spSpecifics.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(i6 > 0)
+                {
+                    new GetR().execute();
+                }
+                i6++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spRecipeTypes = view.findViewById(R.id.spRecipeTypes);
+        spRecipeTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(i7 > 0)
+                {
+                    new GetR().execute();
+                }
+                i7++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spMeals = view.findViewById(R.id.spMeals);
+        spMeals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(i8 > 0)
+                {
+                    new GetR().execute();
+                }
+                i8++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        etextTitle = view.findViewById(R.id.etextTitle);
+        etextTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                textSearch = newText;
+                new GetR().execute();
+                return false;
+            }
+        });
+        textSearch = "";
+
+
+
+
+        GridView ivProducts = view.findViewById(R.id.lvData);
         pAdapter = new AdapterRecepes(getActivity(), listRecepes);
         ivProducts.setAdapter(pAdapter);
         listView = view.findViewById(R.id.lvData);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                int index = (int)id;
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                SinglePlaceFragment fragment = new SinglePlaceFragment(index, "UserPlace");
-//                ft.replace(R.id.perehodAddPlace, fragment);
-//                ft.commit();
-//            }
-//        });
-        new GetRecepes().execute();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int index = (int)id;
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                StepsFragment fragment = new StepsFragment(index);
+                ft.replace(R.id.RecepisPerehod, fragment);
+                ft.commit();
+            }
+        });
+
+        new GetR().execute();
+        new GetDiets().execute();
+        new GetDifficulties().execute();
+        new GetKitchens().execute();
+        new GetPreparations().execute();
+        new GetMeals().execute();
+        new GetSpecifics().execute();
+        new GetRecipeTypes().execute();
+
+
         return view;
     }
+    String[][] spMealsArray;
+    String[][] spRecipeTypesArray;
+    String[][] spSpecificsArray;
+    String[][] spPreparationsArray;
+    String[][] spKitchensArray;
+    String[][] spDifficultiesArray;
+    String[][] spMinutesOfCookingArray;
+    String[][] spDietsArray;
 
-    private class GetRecepes extends AsyncTask<Void, Void, String> {
+
+    private class GetMeals extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes");
+                loading.setVisibility(View.VISIBLE);
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Meals");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder result = new StringBuilder();
                 String line = "";
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                loading.setVisibility(View.GONE);
+                return result.toString();
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                loading.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()+1];
+                str_array[0] = "Прием пищи";
+                spMealsArray = new String[tempArray.length()+1][2];
+                spMealsArray[0][0] = "0";
+                spMealsArray[0][1] = "";
+                for (int i = 0; i < tempArray.length(); i++) {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i+1] = productJson.getString("Title");
+                    spMealsArray[i+1][0] = productJson.getString("MealId");
+                    spMealsArray[i+1][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spMeals.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
+    }
+
+    private class GetRecipeTypes extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                loading.setVisibility(View.VISIBLE);
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/RecipeTypes");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                loading.setVisibility(View.GONE);
+                return result.toString();
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                loading.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()+1];
+                str_array[0] = "Тип рецепта";
+                spRecipeTypesArray = new String[tempArray.length()+1][2];
+                spRecipeTypesArray[0][0] = "0";
+                spRecipeTypesArray[0][1] = "";
+                for (int i = 0; i < tempArray.length(); i++) {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i+1] = productJson.getString("Title");
+                    spRecipeTypesArray[i+1][0] = productJson.getString("RecipeTypeId");
+                    spRecipeTypesArray[i+1][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spRecipeTypes.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
+
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
+    }
+
+    private class GetSpecifics extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                loading.setVisibility(View.VISIBLE);
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Specifics");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                loading.setVisibility(View.GONE);
+                return result.toString();
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                loading.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()+1];
+                str_array[0] = "Специфика";
+                spSpecificsArray = new String[tempArray.length()+1][2];
+                spSpecificsArray[0][0] = "0";
+                spSpecificsArray[0][1] = "";
+                for (int i = 0; i < tempArray.length(); i++) {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i+1] = productJson.getString("Title");
+                    spSpecificsArray[i+1][0] = productJson.getString("SpecificityId");
+                    spSpecificsArray[i+1][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spSpecifics.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
+    }
+
+    private class GetPreparations extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                loading.setVisibility(View.VISIBLE);
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Preparations");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                loading.setVisibility(View.GONE);
+                return result.toString();
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                loading.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()+1];
+                str_array[0] = "Приготовление";
+                spPreparationsArray = new String[tempArray.length()+1][2];
+                spPreparationsArray[0][0] = "0";
+                spPreparationsArray[0][1] = "";
+                for (int i = 0; i < tempArray.length(); i++) {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i+1] = productJson.getString("Title");
+                    spPreparationsArray[i+1][0] = productJson.getString("PreparationId");
+                    spPreparationsArray[i+1][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spPreparations.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
+    }
+
+    private class GetKitchens extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                loading.setVisibility(View.VISIBLE);
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Kitchens");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                loading.setVisibility(View.GONE);
+                return result.toString();
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                loading.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()+1];
+                str_array[0] = "Кухня";
+                spKitchensArray = new String[tempArray.length()+1][2];
+                spKitchensArray[0][0] = "0";
+                spKitchensArray[0][1] = "";
+                for (int i = 0; i < tempArray.length(); i++) {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i+1] = productJson.getString("Title");
+                    spKitchensArray[i+1][0] = productJson.getString("KitchenId");
+                    spKitchensArray[i+1][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spKitchens.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
+    }
+
+    private class GetDifficulties extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                loading.setVisibility(View.VISIBLE);
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Difficulties");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                loading.setVisibility(View.GONE);
+                return result.toString();
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                loading.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()+1];
+                str_array[0] = "Сложность";
+                spDifficultiesArray = new String[tempArray.length()+1][2];
+                spDifficultiesArray[0][0] = "0";
+                spDifficultiesArray[0][1] = "";
+                for (int i = 0; i < tempArray.length(); i++) {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i+1] = productJson.getString("Title");
+                    spDifficultiesArray[i+1][0] = productJson.getString("DifficultiesId");
+                    spDifficultiesArray[i+1][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spDifficulties.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
+    }
+
+    private class GetDiets extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                loading.setVisibility(View.VISIBLE);
+                URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Diets");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                loading.setVisibility(View.GONE);
+                return result.toString();
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                loading.setVisibility(View.VISIBLE);
+                JSONArray tempArray = new JSONArray(s);
+                String[] str_array = new String[tempArray.length()+1];
+                str_array[0] = "Диеты";
+                spDietsArray = new String[tempArray.length()+1][2];
+                spDietsArray[0][0] = "0";
+                spDietsArray[0][1] = "";
+                for (int i = 0; i < tempArray.length(); i++) {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    str_array[i+1] = productJson.getString("Title");
+                    spDietsArray[i+1][0] = productJson.getString("DietId");
+                    spDietsArray[i+1][1] = productJson.getString("Title");
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
+                spDiets.setAdapter(adapter);
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
+    }
+
+    private class GetR extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                loading.setVisibility(View.VISIBLE);
+                String Meals;
+                String RecipeTypes;
+                String Specifics;
+                String Preparations;
+                String Kitchens;
+                String Difficulties;
+                //String MinutesOfCooking;
+                String Diets;
+                URL url;
+                try {
+
+                    Meals = spMeals.getSelectedItem().toString();
+                    RecipeTypes = spRecipeTypes.getSelectedItem().toString();
+                    Specifics = spSpecifics.getSelectedItem().toString();
+                    Kitchens = spKitchens.getSelectedItem().toString();
+                    //MinutesOfCooking = spMinutesOfCooking.getSelectedItem().toString();
+                    Diets = spDiets.getSelectedItem().toString();
+                    Difficulties = spDifficulties.getSelectedItem().toString();
+                    Preparations = spPreparations.getSelectedItem().toString();
+                    url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?b=" + "&name=" + textSearch +"&indexMeals=" + getIdMeals(Meals) +"&indexDiets=" + getIdDiets(Diets) +"&indexRecipeTypes=" +
+                            getIdRecipeTypes(RecipeTypes) +"&indexSpecifics=" + getIdSpecifics(Specifics) +
+                            "&indexPreparations=" + getIdPreparations(Preparations) + "&indexKitchens=" + getIdKitchens(Kitchens) +
+                            "&indexDifficulties=" + getIdDifficulties(Difficulties));
+                    //textVes.setText(Meals);
+
+
+                }
+                catch (Exception exception)
+                {
+                    Meals = "";
+                    RecipeTypes = "";
+                    Specifics = "";
+                    Preparations = "";
+                    Kitchens = "";
+                    Difficulties = "";
+                    //MinutesOfCooking = "";
+                    Diets = "";
+                    url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?b=" + "&name=" + "" +"&indexMeals=" +0 +"&indexDiets=" + 0 +"&indexRecipeTypes=" +
+                            0 +"&indexSpecifics=" + 0 +
+                            "&indexPreparations=" + 0 + "&indexKitchens=" + 0 +
+                            "&indexDifficulties=" + 0 + "&indexMinutesOfCooking=" + 0);
+                    //textVes.setText(Meals);
+                    //url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?b=" +"&name=" + "" +"&id_address=" + 0 +"&id_type_locality=" + 0 +"&fieldSort=" + field +"&valueSort=" + fieldOrder);
+                }
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
                 while ((line = reader.readLine()) != null)
                 {
                     result.append(line);
                 }
+                loading.setVisibility(View.GONE);
                 return result.toString();
+
             }
             catch (Exception exception)
             {
@@ -127,6 +696,7 @@ public class RecepisFragment extends Fragment {
             super.onPostExecute(s);
             try
             {
+                loading.setVisibility(View.VISIBLE);
                 listRecepes.clear();
                 pAdapter.notifyDataSetInvalidated();
                 JSONArray tempArray = new JSONArray(s);
@@ -147,20 +717,115 @@ public class RecepisFragment extends Fragment {
                             productJson.getInt("DifficultyId"),
                             productJson.getInt("CookingId"),
                             productJson.getInt("KitchenId"),
-                            productJson.optDouble("Calories"),
+                            productJson.getDouble("Calories"),
                             productJson.getDouble("Squirrels"),
                             productJson.getDouble("Fats"),
-                            (float) productJson.getDouble("Carbohydrates")
+                            productJson.getDouble("Carbohydrates"),
+                            productJson.getString("PhotoAnd")
                     );
                     listRecepes.add(tempProduct);
                     pAdapter.notifyDataSetInvalidated();
+                    loading.setVisibility(View.GONE);
                 }
-                loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
 
             }
         }
+    }
+
+    private int getIdMeals(String Meals)
+    {
+        for (int i = 0; i < spMealsArray.length; i++)
+        {
+            if(spMealsArray[i][1].equals(Meals))
+            {
+                return Integer.parseInt(spMealsArray[i][0]);
+            }
+        }
+        return 0;
+    }
+    private int getIdDiets(String Diets)
+    {
+        for (int i = 0; i < spDietsArray.length; i++)
+        {
+            if(spDietsArray[i][1].equals(Diets))
+            {
+                return Integer.parseInt(spDietsArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
+    private int getIdDifficulties(String Difficulties)
+    {
+        for (int i = 0; i < spDifficultiesArray.length; i++)
+        {
+            if(spDifficultiesArray[i][1].equals(Difficulties))
+            {
+                return Integer.parseInt(spDifficultiesArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
+    private int getIdKitchens(String Kitchens)
+    {
+        for (int i = 0; i < spKitchensArray.length; i++)
+        {
+            if(spKitchensArray[i][1].equals(Kitchens))
+            {
+                return Integer.parseInt(spKitchensArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
+    private int getIdMinutesOfCooking(String MinutesOfCooking)
+    {
+        for (int i = 0; i < spMinutesOfCookingArray.length; i++)
+        {
+            if(spMinutesOfCookingArray[i][1].equals(MinutesOfCooking))
+            {
+                return Integer.parseInt(spMinutesOfCookingArray[i][0]);
+            }
+        }
+        return 0;
+    }
+    private int getIdPreparations(String Preparations)
+    {
+        for (int i = 0; i < spPreparationsArray.length; i++)
+        {
+            if(spPreparationsArray[i][1].equals(Preparations))
+            {
+                return Integer.parseInt(spPreparationsArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
+    private int getIdRecipeTypes(String RecipeTypes)
+    {
+        for (int i = 0; i < spRecipeTypesArray.length; i++)
+        {
+            if(spRecipeTypesArray[i][1].equals(RecipeTypes))
+            {
+                return Integer.parseInt(spRecipeTypesArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
+    private int getIdSpecifics(String Specifics)
+    {
+        for (int i = 0; i < spSpecificsArray.length; i++)
+        {
+            if(spSpecificsArray[i][1].equals(Specifics))
+            {
+                return Integer.parseInt(spSpecificsArray[i][0]);
+            }
+        }
+        return 0;
     }
 }

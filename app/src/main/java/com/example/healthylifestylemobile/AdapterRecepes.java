@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -57,12 +58,19 @@ public class AdapterRecepes extends BaseAdapter {
         View v = View.inflate(mContext,R.layout.item_recepes,null);
 
         TextView Title = v.findViewById(R.id.Title);
-
+        ImageView picture = v.findViewById(R.id.picture);
 
         RecepesModel mask = maskList.get(position);
         Title.setText(mask.getTitle());
 
-
+        if(mask.getPhotoAnd().toString().equals("null"))
+        {
+            picture.setImageResource(R.drawable.wing);
+        }
+        else
+        {
+            picture.setImageBitmap(getUserImage(mask.getPhotoAnd()));
+        }
         return v;
     }
 }
