@@ -88,9 +88,11 @@ public class StepsFragment extends Fragment {
     AdapterSteps pAdapterStep;
     AdapterIngredient pAdapterIngredient ;
     AdapterIngForRep pAdapterIngForRep;
+    AdapterUnitsOfMeasurement pAdapterUnitsOfMeasurement;
     ProgressBar loading;
     Spinner spMeal;
     EditText etextSData;
+    private List<UnitsOfMeasurementModel> listUnit = new ArrayList<>();
 
     private List<IngredientForRecipeModel> listIng = new ArrayList<>();
     private List<StepsModel> listSteps = new ArrayList<>();
@@ -103,17 +105,22 @@ public class StepsFragment extends Fragment {
 
 
 
-        loading = view.findViewById(R.id.pbLoading);
+        //loading = view.findViewById(R.id.pbLoading);
         TextMinutesRecipes = view.findViewById(R.id.TextMinutesRecipes);
         textComment = view.findViewById(R.id.textComment);
         textDescription = view.findViewById(R.id.textDescription);
-        loading.setVisibility(View.VISIBLE);
+//        loading.setVisibility(View.VISIBLE);
+
 
         etextSData = view.findViewById(R.id.etextSData);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String dateTime = simpleDateFormat.format(calendar.getTime());
         etextSData.setText(dateTime);
+
+        ListView lvDataUnit = view.findViewById(R.id.lvDataUnit);
+        pAdapterUnitsOfMeasurement = new AdapterUnitsOfMeasurement(getActivity(), listUnit);
+        lvDataUnit.setAdapter(pAdapterUnitsOfMeasurement);
 
         ListView lvDataI = view.findViewById(R.id.lvDataI);
         pAdapterIngredient = new AdapterIngredient(getActivity(), listIngredient);
@@ -134,10 +141,62 @@ public class StepsFragment extends Fragment {
         new callGetIngred().execute();
         new callGetI().execute();
         new GetMeals().execute();
+        new callGetUnit().execute();
         callGetRecepis();
 
-        loading.setVisibility(View.GONE);
+//        loading.setVisibility(View.GONE);
         return view;
+    }
+
+    private class callGetUnit extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url;
+                url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/UnitsOfMeasurements/?index=" + id);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+
+                listUnit.clear();
+                pAdapterUnitsOfMeasurement.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+                for (int i = 0;i<tempArray.length();i++)
+                {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    UnitsOfMeasurementModel tempProduct = new UnitsOfMeasurementModel(
+                            productJson.getInt("UnitsOfMeasurementId"),
+                            productJson.getString("Title")
+                    );
+                    listUnit.add(tempProduct);
+                    pAdapterUnitsOfMeasurement.notifyDataSetInvalidated();
+                }
+
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
     }
 
 
@@ -404,7 +463,7 @@ public class StepsFragment extends Fragment {
             super.onPostExecute(s);
             try
             {
-                loading.setVisibility(View.VISIBLE);
+              //  loading.setVisibility(View.VISIBLE);
                 listSteps.clear();
                 pAdapterStep.notifyDataSetInvalidated();
                 JSONArray tempArray = new JSONArray(s);
@@ -422,7 +481,7 @@ public class StepsFragment extends Fragment {
                     listSteps.add(tempProduct);
                     pAdapterStep.notifyDataSetInvalidated();
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {

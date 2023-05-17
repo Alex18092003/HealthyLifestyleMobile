@@ -29,51 +29,13 @@
             android:background="@color/gg"
             android:gravity="bottom"
             android:padding="15dp"
+            android:fontFamily="@font/comforta"
             android:text="Название блюда"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
 
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/cvImage"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:cardCornerRadius="50dp"-->
-<!--        android:layout_margin="10dp">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/picture"-->
-<!--            android:layout_width="150dp"-->
-
-<!--            app:cardCornerRadius="50dp"-->
-<!--            android:layout_height="150dp"-->
-<!--            android:layout_margin="10dp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:srcCompat="@drawable/wing"/>-->
-
-<!--    </androidx.cardview.widget.CardView>-->
-
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/Title"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:textSize="10dp"-->
-<!--        android:padding="20dp"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:text="Title"-->
-<!--        android:fontFamily="@font/comforta"-->
-
-<!--        android:layout_marginTop="20dp"-->
-
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </RelativeLayout>

@@ -86,7 +86,7 @@
             android:gravity="fill_horizontal"
             android:fontFamily="@font/comforta"
             android:text="Мин"
-            android:textSize="14dp"
+            android:textSize="18dp"
             android:textColor="@color/black"
             android:layout_marginStart="40dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,23 +99,23 @@
             android:gravity="fill_horizontal"
             android:fontFamily="@font/comforta"
             android:text="мин"
-            android:textSize="14dp"
+            android:textSize="18dp"
             android:textColor="@color/black"
             android:layout_marginStart="20dp"
             app:layout_constraintStart_toEndOf="@+id/TextMinutesRecipes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"></TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-        <ProgressBar
-            android:id="@+id/pbLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/Time"
-            app:layout_constraintBottom_toTopOf="@+id/textView1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+<!--        <ProgressBar-->
+<!--            android:id="@+id/pbLoading"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/Time"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/textView1"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            />-->
 
         <TextView
             android:id="@+id/textView1"
@@ -129,24 +129,37 @@
             app:layout_constraintTop_toBottomOf="@+id/Time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/ing"
+            app:layout_constraintBottom_toTopOf="@+id/clFv"
             ></TextView>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clFv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/clCal"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/layout_bg"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1"
+        android:elevation="30dp"
+        >
         <LinearLayout
             android:id="@+id/ing"
             android:layout_width="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/clCal"
-            app:layout_constraintTop_toBottomOf="@+id/textView1"
             android:orientation="horizontal"
             android:layout_margin="10dp"
             android:layout_height="wrap_content">
 
             <ListView
                 android:id="@+id/lvDataI"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="150dp"
+                android:layout_height="260dp"
                 android:layout_margin="5dp"
                 android:layout_alignParentLeft="true"
                 app:layout_constraintStart_toStartOf="parent"
@@ -156,24 +169,34 @@
 
         <ListView
             android:id="@+id/lvDataIng"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="40dp"
+            android:layout_height="260dp"
             android:layout_margin="5dp"
             android:layout_alignParentRight="true"
             app:layout_constraintStart_toEndOf="@+id/lvDataI"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lvDataUnit"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+            <ListView
+                android:id="@+id/lvDataUnit"
+                android:layout_width="40dp"
+                android:layout_height="260dp"
+                android:layout_margin="5dp"
+                android:layout_alignParentRight="true"
+                app:layout_constraintStart_toEndOf="@+id/lvDataIng"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </LinearLayout >
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clCal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/clStep"
-            app:layout_constraintTop_toBottomOf="@+id/ing"
+            app:layout_constraintTop_toBottomOf="@+id/clFv"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/layout_bg"
             android:padding="20dp"
@@ -457,7 +480,7 @@
             <ListView
                 android:id="@+id/lvDataSteps"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

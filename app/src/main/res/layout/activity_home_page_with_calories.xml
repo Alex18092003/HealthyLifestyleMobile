@@ -63,7 +63,7 @@
         app:headerLayout="@layout/layout_navigation_header"
         app:menu="@menu/navigation_menu"
         android:background="@color/g"
-        app:itemTextColor="@color/white"
+        app:itemTextColor="@color/g"
         app:itemShapeFillColor="@color/m"
         android:layout_gravity="start"/>
 

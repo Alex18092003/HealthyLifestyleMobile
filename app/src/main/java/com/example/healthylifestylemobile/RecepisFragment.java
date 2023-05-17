@@ -99,6 +99,22 @@ Button Entry;
         //loading.setVisibility(View.VISIBLE);
 
         //textVes= view.findViewById(R.id.textVes);
+        spMinutesOfCooking = view.findViewById(R.id.spMinutesOfCooking);
+        spMinutesOfCooking.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if(i2 > 0)
+                {
+                    //new GetR().execute();
+                }
+                i1++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
         spDiets = view.findViewById(R.id.spDiets);
         spDiets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -211,6 +227,7 @@ Button Entry;
 
             }
         });
+
         etextTitle = view.findViewById(R.id.etextTitle);
         etextTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -232,6 +249,7 @@ Button Entry;
 
 
 
+
         GridView ivProducts = view.findViewById(R.id.lvData);
         pAdapter = new AdapterRecepes(getActivity(), listRecepes);
         ivProducts.setAdapter(pAdapter);
@@ -247,6 +265,7 @@ Button Entry;
                 ft.commit();
             }
         });
+
 
         new GetR().execute();
         new GetDiets().execute();
@@ -269,13 +288,42 @@ Button Entry;
     String[][] spMinutesOfCookingArray;
     String[][] spDietsArray;
 
+    public String fild(String str)
+    {
+        if(str.equals("до 10 мин")){
+            return "10";
+        }
+        else if(str.equals("до 20 мин")){
+            return  "20";
+        }
+        else if(str.equals("до 30 мин"))
+        {
+            return "30";
+        }
+        else if(str.equals("до 40 мин")){
+            return "40";
+        }
+        else if(str.equals("до 50 мин")){
+            return "50";
+        }
+        else if(str.equals("до 60 мин")){
+            return "60";
+        }
+        else if(str.equals("более 60 мин")){
+            return "60";
+        }
+        else{
+            return null;
+        }
+    }
+
 
     private class GetMeals extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Meals");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -285,7 +333,7 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -296,7 +344,7 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Прием пищи";
@@ -311,7 +359,7 @@ Button Entry;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spMeals.setAdapter(adapter);
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
@@ -325,7 +373,7 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/RecipeTypes");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -335,7 +383,7 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -346,7 +394,7 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Тип рецепта";
@@ -361,7 +409,7 @@ Button Entry;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spRecipeTypes.setAdapter(adapter);
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
 
             }
             catch (Exception ignored)
@@ -376,7 +424,7 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Specifics");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -386,7 +434,7 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -397,7 +445,7 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Специфика";
@@ -412,7 +460,7 @@ Button Entry;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spSpecifics.setAdapter(adapter);
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
@@ -426,7 +474,7 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Preparations");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -436,7 +484,7 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -447,7 +495,7 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Приготовление";
@@ -462,7 +510,7 @@ Button Entry;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spPreparations.setAdapter(adapter);
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
@@ -476,7 +524,7 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Kitchens");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -486,7 +534,7 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -497,7 +545,7 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Кухня";
@@ -512,7 +560,7 @@ Button Entry;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spKitchens.setAdapter(adapter);
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
@@ -526,7 +574,7 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Difficulties");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -536,7 +584,7 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -547,7 +595,7 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Сложность";
@@ -562,7 +610,7 @@ Button Entry;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spDifficulties.setAdapter(adapter);
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
@@ -576,7 +624,7 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Diets");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -586,7 +634,7 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -597,7 +645,7 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Диеты";
@@ -612,7 +660,7 @@ Button Entry;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spDiets.setAdapter(adapter);
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
@@ -626,7 +674,7 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loading.setVisibility(View.VISIBLE);
+                //loading.setVisibility(View.VISIBLE);
                 String Meals;
                 String RecipeTypes;
                 String Specifics;
@@ -682,7 +730,7 @@ Button Entry;
                 {
                     result.append(line);
                 }
-                loading.setVisibility(View.GONE);
+                //loading.setVisibility(View.GONE);
                 return result.toString();
 
             }
