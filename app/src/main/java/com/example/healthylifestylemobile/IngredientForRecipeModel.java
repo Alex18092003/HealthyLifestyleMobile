@@ -5,11 +5,11 @@ public class IngredientForRecipeModel {
     private int IngredientId;
     private int RecipeId;
     private int UnitsOfMeasurementId;
-    private double Quantity;
+    private int Quantity;
 
     public  IngredientForRecipeModel(int IngredientForRecipeId,
                             int IngredientId,int RecipeId,
-                            int UnitsOfMeasurementId, double Quantity)
+                            int UnitsOfMeasurementId, int Quantity)
     {
         this.IngredientForRecipeId = IngredientForRecipeId;
         this.IngredientId = IngredientId;
@@ -34,7 +34,7 @@ public class IngredientForRecipeModel {
     {
         this.UnitsOfMeasurementId = UnitsOfMeasurementId;
     }
-    public void setQuantity(double StepId)
+    public void setQuantity(int Quantity)
     {
         this.Quantity = Quantity;
     }
@@ -57,8 +57,14 @@ public class IngredientForRecipeModel {
     {
         return UnitsOfMeasurementId;
     }
-    public double getQuantity()
+    public Object getQuantity()
     {
+        if(Quantity == 0)
+        {
+            //int  Quantity2 = Integer.parseInt(String.valueOf(Quantity));
+            return "";
+        }
+        //int  Quantity2 = Integer.parseInt(Quantity);
         return Quantity;
     }
 }

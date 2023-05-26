@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -65,7 +66,9 @@ public class RecepisFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     TextView textVes;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,14 +83,17 @@ public class RecepisFragment extends Fragment {
     GridView listView;
     AdapterRecepes pAdapter;
     ProgressBar loading;
-Button Entry;
+    Button Entry;
 
     Spinner spDiets, spMinutesOfCooking, spDifficulties,
             spKitchens, spPreparations, spSpecifics,
             spRecipeTypes, spMeals;
     SearchView etextTitle;
     String textSearch;
-    int i1 = 0, i2 = 0, i3 = 0, i4 = 0,i5 = 0, i6 = 0,i7 = 0, i8 = 0;
+    ConstraintLayout v;
+    int i1 = 0, i2 = 0, i3 = 0, i4 = 0, i5 = 0, i6 = 0, i7 = 0, i8 = 0;
+    public int r2 = 0;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,15 +102,15 @@ Button Entry;
         View view = inflater.inflate(R.layout.fragment_recepis, container, false);
 
         loading = view.findViewById(R.id.pbLoading);
-        //loading.setVisibility(View.VISIBLE);
+        v = view.findViewById(R.id.v);
+        loading.setVisibility(View.VISIBLE);
+        loading.setMax(100);
 
-        //textVes= view.findViewById(R.id.textVes);
         spMinutesOfCooking = view.findViewById(R.id.spMinutesOfCooking);
         spMinutesOfCooking.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(i2 > 0)
-                {
+                if (i2 > 0) {
                     //new GetR().execute();
                 }
                 i1++;
@@ -119,8 +125,7 @@ Button Entry;
         spDiets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(i1 > 0)
-                {
+                if (i1 > 0) {
                     new GetR().execute();
                 }
                 i1++;
@@ -135,24 +140,22 @@ Button Entry;
         spDifficulties.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(i3 > 0)
-                {
+                if (i3 > 0) {
                     new GetR().execute();
                 }
                 i3++;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
         spKitchens = view.findViewById(R.id.spKitchens);
         spKitchens.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(i4 > 0)
-                {
+                if (i4 > 0) {
                     new GetR().execute();
                 }
                 i4++;
@@ -167,8 +170,7 @@ Button Entry;
         spPreparations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(i5 > 0)
-                {
+                if (i5 > 0) {
                     new GetR().execute();
                 }
                 i5++;
@@ -183,8 +185,7 @@ Button Entry;
         spSpecifics.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(i6 > 0)
-                {
+                if (i6 > 0) {
                     new GetR().execute();
                 }
                 i6++;
@@ -199,8 +200,7 @@ Button Entry;
         spRecipeTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(i7 > 0)
-                {
+                if (i7 > 0) {
                     new GetR().execute();
                 }
                 i7++;
@@ -215,8 +215,7 @@ Button Entry;
         spMeals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(i8 > 0)
-                {
+                if (i8 > 0) {
                     new GetR().execute();
                 }
                 i8++;
@@ -227,7 +226,6 @@ Button Entry;
 
             }
         });
-
         etextTitle = view.findViewById(R.id.etextTitle);
         etextTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -237,28 +235,22 @@ Button Entry;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText)
-            {
+            public boolean onQueryTextChange(String newText) {
                 textSearch = newText;
                 new GetR().execute();
                 return false;
             }
         });
         textSearch = "";
-
-
-
-
-
         GridView ivProducts = view.findViewById(R.id.lvData);
         pAdapter = new AdapterRecepes(getActivity(), listRecepes);
         ivProducts.setAdapter(pAdapter);
         listView = view.findViewById(R.id.lvData);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int index = (int)id;
+                int index = (int) id;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 StepsFragment fragment = new StepsFragment(index);
                 ft.replace(R.id.RecepisPerehod, fragment);
@@ -275,10 +267,21 @@ Button Entry;
         new GetMeals().execute();
         new GetSpecifics().execute();
         new GetRecipeTypes().execute();
+        ff();
 
 
         return view;
     }
+    public  void ff()
+    {
+        if (r2 == 4) {
+
+            loading.setVisibility(View.GONE);
+            v.setVisibility(View.VISIBLE);
+        }
+    }
+
+
     String[][] spMealsArray;
     String[][] spRecipeTypesArray;
     String[][] spSpecificsArray;
@@ -288,52 +291,40 @@ Button Entry;
     String[][] spMinutesOfCookingArray;
     String[][] spDietsArray;
 
-    public String fild(String str)
-    {
-        if(str.equals("до 10 мин")){
+
+    public String fild(String str) {
+        if (str.equals("до 10 мин")) {
             return "10";
-        }
-        else if(str.equals("до 20 мин")){
-            return  "20";
-        }
-        else if(str.equals("до 30 мин"))
-        {
+        } else if (str.equals("до 20 мин")) {
+            return "20";
+        } else if (str.equals("до 30 мин")) {
             return "30";
-        }
-        else if(str.equals("до 40 мин")){
+        } else if (str.equals("до 40 мин")) {
             return "40";
-        }
-        else if(str.equals("до 50 мин")){
+        } else if (str.equals("до 50 мин")) {
             return "50";
-        }
-        else if(str.equals("до 60 мин")){
+        } else if (str.equals("до 60 мин")) {
             return "60";
-        }
-        else if(str.equals("более 60 мин")){
+        } else if (str.equals("более 60 мин")) {
             return "60";
-        }
-        else{
+        } else {
             return null;
         }
     }
 
 
     private class GetMeals extends AsyncTask<Void, Void, String> {
-
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Meals");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder result = new StringBuilder();
                 String line = "";
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -343,26 +334,28 @@ Button Entry;
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
             try {
-                //loading.setVisibility(View.VISIBLE);
+
                 JSONArray tempArray = new JSONArray(s);
-                String[] str_array = new String[tempArray.length()+1];
+                String[] str_array = new String[tempArray.length() + 1];
                 str_array[0] = "Прием пищи";
-                spMealsArray = new String[tempArray.length()+1][2];
+                spMealsArray = new String[tempArray.length() + 1][2];
                 spMealsArray[0][0] = "0";
                 spMealsArray[0][1] = "";
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
-                    str_array[i+1] = productJson.getString("Title");
-                    spMealsArray[i+1][0] = productJson.getString("MealId");
-                    spMealsArray[i+1][1] = productJson.getString("Title");
+                    str_array[i + 1] = productJson.getString("Title");
+                    spMealsArray[i + 1][0] = productJson.getString("MealId");
+                    spMealsArray[i + 1][1] = productJson.getString("Title");
+                    r2 ++;
                 }
+
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spMeals.setAdapter(adapter);
-                //loading.setVisibility(View.GONE);
-            }
-            catch (Exception ignored)
-            {
+                ff();
+
+            } catch (Exception ignored) {
 
             }
         }
@@ -373,7 +366,6 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/RecipeTypes");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -383,7 +375,6 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -394,26 +385,22 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
-                String[] str_array = new String[tempArray.length()+1];
+                String[] str_array = new String[tempArray.length() + 1];
                 str_array[0] = "Тип рецепта";
-                spRecipeTypesArray = new String[tempArray.length()+1][2];
+                spRecipeTypesArray = new String[tempArray.length() + 1][2];
                 spRecipeTypesArray[0][0] = "0";
                 spRecipeTypesArray[0][1] = "";
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
-                    str_array[i+1] = productJson.getString("Title");
-                    spRecipeTypesArray[i+1][0] = productJson.getString("RecipeTypeId");
-                    spRecipeTypesArray[i+1][1] = productJson.getString("Title");
+                    str_array[i + 1] = productJson.getString("Title");
+                    spRecipeTypesArray[i + 1][0] = productJson.getString("RecipeTypeId");
+                    spRecipeTypesArray[i + 1][1] = productJson.getString("Title");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spRecipeTypes.setAdapter(adapter);
-                //loading.setVisibility(View.GONE);
 
-            }
-            catch (Exception ignored)
-            {
+            } catch (Exception ignored) {
 
             }
         }
@@ -424,7 +411,6 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Specifics");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -434,7 +420,6 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -445,25 +430,22 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
-                String[] str_array = new String[tempArray.length()+1];
+                String[] str_array = new String[tempArray.length() + 1];
                 str_array[0] = "Специфика";
-                spSpecificsArray = new String[tempArray.length()+1][2];
+                spSpecificsArray = new String[tempArray.length() + 1][2];
                 spSpecificsArray[0][0] = "0";
                 spSpecificsArray[0][1] = "";
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
-                    str_array[i+1] = productJson.getString("Title");
-                    spSpecificsArray[i+1][0] = productJson.getString("SpecificityId");
-                    spSpecificsArray[i+1][1] = productJson.getString("Title");
+                    str_array[i + 1] = productJson.getString("Title");
+                    spSpecificsArray[i + 1][0] = productJson.getString("SpecificityId");
+                    spSpecificsArray[i + 1][1] = productJson.getString("Title");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spSpecifics.setAdapter(adapter);
-                //loading.setVisibility(View.GONE);
-            }
-            catch (Exception ignored)
-            {
+
+            } catch (Exception ignored) {
 
             }
         }
@@ -474,7 +456,6 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Preparations");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -484,7 +465,6 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -495,25 +475,22 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
-                String[] str_array = new String[tempArray.length()+1];
+                String[] str_array = new String[tempArray.length() + 1];
                 str_array[0] = "Приготовление";
-                spPreparationsArray = new String[tempArray.length()+1][2];
+                spPreparationsArray = new String[tempArray.length() + 1][2];
                 spPreparationsArray[0][0] = "0";
                 spPreparationsArray[0][1] = "";
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
-                    str_array[i+1] = productJson.getString("Title");
-                    spPreparationsArray[i+1][0] = productJson.getString("PreparationId");
-                    spPreparationsArray[i+1][1] = productJson.getString("Title");
+                    str_array[i + 1] = productJson.getString("Title");
+                    spPreparationsArray[i + 1][0] = productJson.getString("PreparationId");
+                    spPreparationsArray[i + 1][1] = productJson.getString("Title");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spPreparations.setAdapter(adapter);
-                //loading.setVisibility(View.GONE);
-            }
-            catch (Exception ignored)
-            {
+
+            } catch (Exception ignored) {
 
             }
         }
@@ -524,7 +501,6 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Kitchens");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -534,7 +510,6 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -545,25 +520,22 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
-                String[] str_array = new String[tempArray.length()+1];
+                String[] str_array = new String[tempArray.length() + 1];
                 str_array[0] = "Кухня";
-                spKitchensArray = new String[tempArray.length()+1][2];
+                spKitchensArray = new String[tempArray.length() + 1][2];
                 spKitchensArray[0][0] = "0";
                 spKitchensArray[0][1] = "";
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
-                    str_array[i+1] = productJson.getString("Title");
-                    spKitchensArray[i+1][0] = productJson.getString("KitchenId");
-                    spKitchensArray[i+1][1] = productJson.getString("Title");
+                    str_array[i + 1] = productJson.getString("Title");
+                    spKitchensArray[i + 1][0] = productJson.getString("KitchenId");
+                    spKitchensArray[i + 1][1] = productJson.getString("Title");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spKitchens.setAdapter(adapter);
-                //loading.setVisibility(View.GONE);
-            }
-            catch (Exception ignored)
-            {
+
+            } catch (Exception ignored) {
 
             }
         }
@@ -574,7 +546,6 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Difficulties");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -584,7 +555,6 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -595,25 +565,22 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
-                String[] str_array = new String[tempArray.length()+1];
+                String[] str_array = new String[tempArray.length() + 1];
                 str_array[0] = "Сложность";
-                spDifficultiesArray = new String[tempArray.length()+1][2];
+                spDifficultiesArray = new String[tempArray.length() + 1][2];
                 spDifficultiesArray[0][0] = "0";
                 spDifficultiesArray[0][1] = "";
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
-                    str_array[i+1] = productJson.getString("Title");
-                    spDifficultiesArray[i+1][0] = productJson.getString("DifficultiesId");
-                    spDifficultiesArray[i+1][1] = productJson.getString("Title");
+                    str_array[i + 1] = productJson.getString("Title");
+                    spDifficultiesArray[i + 1][0] = productJson.getString("DifficultiesId");
+                    spDifficultiesArray[i + 1][1] = productJson.getString("Title");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spDifficulties.setAdapter(adapter);
-                //loading.setVisibility(View.GONE);
-            }
-            catch (Exception ignored)
-            {
+
+            } catch (Exception ignored) {
 
             }
         }
@@ -624,7 +591,6 @@ Button Entry;
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                //loading.setVisibility(View.VISIBLE);
                 URL url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Diets");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -634,7 +600,6 @@ Button Entry;
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
                 return result.toString();
             } catch (Exception exception) {
                 return null;
@@ -645,25 +610,22 @@ Button Entry;
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-                //loading.setVisibility(View.VISIBLE);
                 JSONArray tempArray = new JSONArray(s);
-                String[] str_array = new String[tempArray.length()+1];
+                String[] str_array = new String[tempArray.length() + 1];
                 str_array[0] = "Диеты";
-                spDietsArray = new String[tempArray.length()+1][2];
+                spDietsArray = new String[tempArray.length() + 1][2];
                 spDietsArray[0][0] = "0";
                 spDietsArray[0][1] = "";
                 for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
-                    str_array[i+1] = productJson.getString("Title");
-                    spDietsArray[i+1][0] = productJson.getString("DietId");
-                    spDietsArray[i+1][1] = productJson.getString("Title");
+                    str_array[i + 1] = productJson.getString("Title");
+                    spDietsArray[i + 1][0] = productJson.getString("DietId");
+                    spDietsArray[i + 1][1] = productJson.getString("Title");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spDiets.setAdapter(adapter);
-                //loading.setVisibility(View.GONE);
-            }
-            catch (Exception ignored)
-            {
+
+            } catch (Exception ignored) {
 
             }
         }
@@ -694,16 +656,12 @@ Button Entry;
                     Diets = spDiets.getSelectedItem().toString();
                     Difficulties = spDifficulties.getSelectedItem().toString();
                     Preparations = spPreparations.getSelectedItem().toString();
-                    url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?b=" + "&name=" + textSearch +"&indexMeals=" + getIdMeals(Meals) +"&indexDiets=" + getIdDiets(Diets) +"&indexRecipeTypes=" +
-                            getIdRecipeTypes(RecipeTypes) +"&indexSpecifics=" + getIdSpecifics(Specifics) +
+                    url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?b=" + "&name=" + textSearch + "&indexMeals=" + getIdMeals(Meals) + "&indexDiets=" + getIdDiets(Diets) + "&indexRecipeTypes=" +
+                            getIdRecipeTypes(RecipeTypes) + "&indexSpecifics=" + getIdSpecifics(Specifics) +
                             "&indexPreparations=" + getIdPreparations(Preparations) + "&indexKitchens=" + getIdKitchens(Kitchens) +
                             "&indexDifficulties=" + getIdDifficulties(Difficulties));
-                    //textVes.setText(Meals);
 
-
-                }
-                catch (Exception exception)
-                {
+                } catch (Exception exception) {
                     Meals = "";
                     RecipeTypes = "";
                     Specifics = "";
@@ -712,8 +670,8 @@ Button Entry;
                     Difficulties = "";
                     //MinutesOfCooking = "";
                     Diets = "";
-                    url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?b=" + "&name=" + "" +"&indexMeals=" +0 +"&indexDiets=" + 0 +"&indexRecipeTypes=" +
-                            0 +"&indexSpecifics=" + 0 +
+                    url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?b=" + "&name=" + "" + "&indexMeals=" + 0 + "&indexDiets=" + 0 + "&indexRecipeTypes=" +
+                            0 + "&indexSpecifics=" + 0 +
                             "&indexPreparations=" + 0 + "&indexKitchens=" + 0 +
                             "&indexDifficulties=" + 0 + "&indexMinutesOfCooking=" + 0);
                     //textVes.setText(Meals);
@@ -726,30 +684,26 @@ Button Entry;
                 StringBuilder result = new StringBuilder();
                 String line = "";
 
-                while ((line = reader.readLine()) != null)
-                {
+                while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                //loading.setVisibility(View.GONE);
+
                 return result.toString();
 
-            }
-            catch (Exception exception)
-            {
+            } catch (Exception exception) {
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            try
-            {
-                loading.setVisibility(View.VISIBLE);
+            try {
+
                 listRecepes.clear();
                 pAdapter.notifyDataSetInvalidated();
                 JSONArray tempArray = new JSONArray(s);
-                for (int i = 0;i<tempArray.length();i++)
-                {
+                for (int i = 0; i < tempArray.length(); i++) {
                     JSONObject productJson = tempArray.getJSONObject(i);
                     RecepesModel tempProduct = new RecepesModel(
                             productJson.getInt("RecipeId"),
@@ -773,104 +727,80 @@ Button Entry;
                     );
                     listRecepes.add(tempProduct);
                     pAdapter.notifyDataSetInvalidated();
-                    loading.setVisibility(View.GONE);
+
                 }
-            }
-            catch (Exception ignored)
-            {
+            } catch (Exception ignored) {
 
             }
         }
     }
 
-    private int getIdMeals(String Meals)
-    {
-        for (int i = 0; i < spMealsArray.length; i++)
-        {
-            if(spMealsArray[i][1].equals(Meals))
-            {
+    private int getIdMeals(String Meals) {
+        for (int i = 0; i < spMealsArray.length; i++) {
+            if (spMealsArray[i][1].equals(Meals)) {
                 return Integer.parseInt(spMealsArray[i][0]);
             }
         }
         return 0;
     }
-    private int getIdDiets(String Diets)
-    {
-        for (int i = 0; i < spDietsArray.length; i++)
-        {
-            if(spDietsArray[i][1].equals(Diets))
-            {
+
+    private int getIdDiets(String Diets) {
+        for (int i = 0; i < spDietsArray.length; i++) {
+            if (spDietsArray[i][1].equals(Diets)) {
                 return Integer.parseInt(spDietsArray[i][0]);
             }
         }
         return 0;
     }
 
-    private int getIdDifficulties(String Difficulties)
-    {
-        for (int i = 0; i < spDifficultiesArray.length; i++)
-        {
-            if(spDifficultiesArray[i][1].equals(Difficulties))
-            {
+    private int getIdDifficulties(String Difficulties) {
+        for (int i = 0; i < spDifficultiesArray.length; i++) {
+            if (spDifficultiesArray[i][1].equals(Difficulties)) {
                 return Integer.parseInt(spDifficultiesArray[i][0]);
             }
         }
         return 0;
     }
 
-    private int getIdKitchens(String Kitchens)
-    {
-        for (int i = 0; i < spKitchensArray.length; i++)
-        {
-            if(spKitchensArray[i][1].equals(Kitchens))
-            {
+    private int getIdKitchens(String Kitchens) {
+        for (int i = 0; i < spKitchensArray.length; i++) {
+            if (spKitchensArray[i][1].equals(Kitchens)) {
                 return Integer.parseInt(spKitchensArray[i][0]);
             }
         }
         return 0;
     }
 
-    private int getIdMinutesOfCooking(String MinutesOfCooking)
-    {
-        for (int i = 0; i < spMinutesOfCookingArray.length; i++)
-        {
-            if(spMinutesOfCookingArray[i][1].equals(MinutesOfCooking))
-            {
+    private int getIdMinutesOfCooking(String MinutesOfCooking) {
+        for (int i = 0; i < spMinutesOfCookingArray.length; i++) {
+            if (spMinutesOfCookingArray[i][1].equals(MinutesOfCooking)) {
                 return Integer.parseInt(spMinutesOfCookingArray[i][0]);
             }
         }
         return 0;
     }
-    private int getIdPreparations(String Preparations)
-    {
-        for (int i = 0; i < spPreparationsArray.length; i++)
-        {
-            if(spPreparationsArray[i][1].equals(Preparations))
-            {
+
+    private int getIdPreparations(String Preparations) {
+        for (int i = 0; i < spPreparationsArray.length; i++) {
+            if (spPreparationsArray[i][1].equals(Preparations)) {
                 return Integer.parseInt(spPreparationsArray[i][0]);
             }
         }
         return 0;
     }
 
-    private int getIdRecipeTypes(String RecipeTypes)
-    {
-        for (int i = 0; i < spRecipeTypesArray.length; i++)
-        {
-            if(spRecipeTypesArray[i][1].equals(RecipeTypes))
-            {
+    private int getIdRecipeTypes(String RecipeTypes) {
+        for (int i = 0; i < spRecipeTypesArray.length; i++) {
+            if (spRecipeTypesArray[i][1].equals(RecipeTypes)) {
                 return Integer.parseInt(spRecipeTypesArray[i][0]);
             }
         }
         return 0;
     }
 
-    private int getIdSpecifics(String Specifics)
-    {
-        for (int i = 0; i < spSpecificsArray.length; i++)
-        {
-            if(spSpecificsArray[i][1].equals(Specifics))
-            {
+    private int getIdSpecifics(String Specifics) {
+        for (int i = 0; i < spSpecificsArray.length; i++) {
+            if (spSpecificsArray[i][1].equals(Specifics)) {
                 return Integer.parseInt(spSpecificsArray[i][0]);
             }
         }

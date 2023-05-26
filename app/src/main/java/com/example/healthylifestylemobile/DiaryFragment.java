@@ -1,11 +1,24 @@
 package com.example.healthylifestylemobile;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,10 +67,84 @@ public class DiaryFragment extends Fragment {
         }
     }
 
+    AdapterDairyRation pAdapterDairy;
+    private List<DairyModel> listDairy= new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_diary, container, false);
+        View view = inflater.inflate(R.layout.fragment_diary, container, false);
+
+        ListView lvDataBreakfast = view.findViewById(R.id.lvDataBreakfast);
+        pAdapterDairy = new AdapterDairyRation(getActivity(), listDairy);
+        lvDataBreakfast.setAdapter(pAdapterDairy);
+
+        new callGetDairy().execute();
+        return view;
+    }
+
+    private class callGetDairy extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url;
+                url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/DailyRations?t=" +3+ "&iddd="+4+ "&m=" +0);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listDairy.clear();
+                pAdapterDairy.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+                int  o =0;
+                for (int i = 0;i<tempArray.length();i++)
+                {
+
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    DairyModel tempProduct = new DairyModel(
+                            productJson.getInt("DailyRationId"),
+                            productJson.getInt("UserId"),
+                            productJson.getInt("RecepeId"),
+                            productJson.optJSONObject("Dates"),
+                            productJson.getDouble("Calories"),
+                            productJson.getDouble("Squirrels"),
+                            productJson.getDouble("Fats"),
+                            productJson.getDouble("Carbohydrates"),
+                            productJson.getDouble("CaloriesUsers"),
+                            productJson.getInt("MealId")
+
+                    );
+                    o++;
+                    listDairy.add(tempProduct);
+                    pAdapterDairy.notifyDataSetInvalidated();
+                }
+                o++;
+            }
+            catch (Exception ignored)
+            {
+               Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
+
+            }
+        }
     }
 }

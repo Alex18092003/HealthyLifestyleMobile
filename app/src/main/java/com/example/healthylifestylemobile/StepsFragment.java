@@ -1,19 +1,24 @@
 package com.example.healthylifestylemobile;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,64 +95,235 @@ public class StepsFragment extends Fragment {
     AdapterIngredient pAdapterIngredient ;
     AdapterIngForRep pAdapterIngForRep;
     AdapterUnitsOfMeasurement pAdapterUnitsOfMeasurement;
-    ProgressBar loading;
     Spinner spMeal;
-    EditText etextSData;
+    EditText etextSData, etextCall, etextVes, etextSquirrels,etextFat,etextCarbohydrates;
     private List<UnitsOfMeasurementModel> listUnit = new ArrayList<>();
 
     private List<IngredientForRecipeModel> listIng = new ArrayList<>();
     private List<StepsModel> listSteps = new ArrayList<>();
     private List<IngrediensModel> listIngredient = new ArrayList<>();
+    ImageView picture;
+    Button add;
+    TextView Hint;
+    String dateTime;
+    Calendar calendar;
+    public  int r2=0;
+    ProgressBar loading;
+    ConstraintLayout v;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_steps, container, false);
         // Inflate the layout for this fragment
 
+       loading = view.findViewById(R.id.pbLoading);
+        v = view.findViewById(R.id.v);
+        loading.setVisibility(View.VISIBLE);
+        //loading.setMax(100);
 
+        add = (Button) view.findViewById(R.id.add);
+        Hint = view.findViewById(R.id.Hint);
 
-        //loading = view.findViewById(R.id.pbLoading);
+        picture = view.findViewById(R.id.picture);
+        picture.setColorFilter(Color.argb(44, 39, 64, 37));
+
         TextMinutesRecipes = view.findViewById(R.id.TextMinutesRecipes);
         textComment = view.findViewById(R.id.textComment);
         textDescription = view.findViewById(R.id.textDescription);
-//        loading.setVisibility(View.VISIBLE);
+
+
+        etextCall = view.findViewById(R.id.etextCall);
+
+        etextVes = view.findViewById(R.id.etextVes);
+        String v = String.valueOf(100);
+        etextVes.setText(v);
+
+
+        etextSquirrels = view.findViewById(R.id.etextSquirrels);
+
+        etextFat = view.findViewById(R.id.etextFat);
+
+        etextCarbohydrates = view.findViewById(R.id.etextCarbohydrates);
 
 
         etextSData = view.findViewById(R.id.etextSData);
-        Calendar calendar = Calendar.getInstance();
+         calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String dateTime = simpleDateFormat.format(calendar.getTime());
+         dateTime = simpleDateFormat.format(calendar.getTime());
         etextSData.setText(dateTime);
+
 
         ListView lvDataUnit = view.findViewById(R.id.lvDataUnit);
         pAdapterUnitsOfMeasurement = new AdapterUnitsOfMeasurement(getActivity(), listUnit);
         lvDataUnit.setAdapter(pAdapterUnitsOfMeasurement);
 
+
         ListView lvDataI = view.findViewById(R.id.lvDataI);
         pAdapterIngredient = new AdapterIngredient(getActivity(), listIngredient);
         lvDataI.setAdapter(pAdapterIngredient);
+
 
         ListView lvDataIng = view.findViewById(R.id.lvDataIng);
         pAdapterIngForRep = new AdapterIngForRep(getActivity(), listIng);
         lvDataIng.setAdapter(pAdapterIngForRep);
 
+
+
         ListView lvDataSteps = view.findViewById(R.id.lvDataSteps);
         pAdapterStep = new AdapterSteps(getActivity(), listSteps);
         lvDataSteps.setAdapter(pAdapterStep);
-        //lvDataSteps = view.findViewById(R.id.lvDataSteps);
+        //AdapterSteps.setListViewHeightBasedOnChildren(lvDataSteps);
+        //UIUtils.setListViewHeightBasedOnChildren(lvDataSteps);
+
         spMeal = view.findViewById(R.id.spMeal);
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String c = String.valueOf(etextVes.getText());
+                if(c.replaceAll("\\s+", " ").equals(""))
+                {
+                    Hint.setText("Необходимо ввести вес блюда");
+                    return;
+                }
+                try {
+                    callPostDataMethod();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
 
         new callGetSteps().execute();
+
         new callGetIngred().execute();
         new callGetI().execute();
         new GetMeals().execute();
         new callGetUnit().execute();
-        callGetRecepis();
 
-//        loading.setVisibility(View.GONE);
+        callGetRecepis();
+        callGetUser();
+
+        ff();
+
         return view;
     }
+    public  void ff()
+    {
+        if (r2 == 7) {
+
+            loading.setVisibility(View.GONE);
+            v.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static UserModel userModel;
+    float Calories;
+
+    public void callGetUser()
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<UserModel> call = retrofitAPI.getDATAUser(HomePageWithCalories.index);
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+                userModel = new UserModel(0, response.body().getGenderId(), response.body().getLogin(), response.body().getWeight(), response.body().getHeight(),
+                        response.body().getActivityId(),  response.body().getGoalId(),  response.body().getCalories(),
+                        response.body().getSquirrels(), response.body().getDateOfBirth(), response.body().getPassword(),
+                        response.body().getFats(), response.body().getCarbohydrates());
+                Calories = response.body().getCalories();
+                r2++;
+                ff();
+            }
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    private void callPostDataMethod() throws ParseException {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        RetrofitAPI retrofitAPI;
+        DailyRationsModel modal;
+
+        String someDate = "1995-01-01";
+       // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //Date date = sdf.parse(someDate);
+       //Toast.makeText(getActivity(), String.valueOf(selectedDate) , Toast.LENGTH_LONG).show();
+
+
+            float cal = Float.parseFloat(etextCall.getText().toString());
+            float s = Float.parseFloat(etextSquirrels.getText().toString());
+            float f = Float.parseFloat(etextFat.getText().toString());
+            float c = Float.parseFloat(etextCarbohydrates.getText().toString());
+            int m = getIdMeals(spMeal.getSelectedItem().toString());
+                if(m == 0)
+                {
+                    Hint.setText("Необходимо выбрать прием пищи");
+                  return;
+               }
+
+                float cccc =  Calories - cal;
+
+
+               retrofitAPI = retrofit.create(RetrofitAPI.class);
+             modal = new DailyRationsModel(0,
+                    HomePageWithCalories.index,
+                    id,
+                     someDate,
+                    cal,
+                    s,
+                    f,
+                    c,
+                    cccc,
+                    m);
+
+            Call<DailyRationsModel> call = retrofitAPI.createDaily(modal);
+
+            call.enqueue(new Callback<DailyRationsModel>() {
+                @Override
+                public void onResponse(Call<DailyRationsModel> call, Response<DailyRationsModel> response) {
+                    if (!response.isSuccessful()) {
+                        Hint.setText("При добавление блюда возникла ошибка");
+
+                        return;
+                    }
+                    //Toast.makeText(getActivity(), "Вы успешно зарегистрированы", Toast.LENGTH_LONG).show();
+
+                    Hint.setText("");
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    RecepisFragment fragment = new RecepisFragment();
+                    ft.replace(R.id.RecepisPerehod, fragment);
+                    ft.commit();
+                }
+
+                @Override
+                public void onFailure(Call<DailyRationsModel> call, Throwable t) {
+                    //Hint.setText("При добавление блюда возникла ошибка: ");
+                    Toast.makeText(getActivity(), "При проверке пароля возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+    }
+
+
 
     private class callGetUnit extends AsyncTask<Void, Void, String> {
         @Override
@@ -190,7 +367,8 @@ public class StepsFragment extends Fragment {
                     listUnit.add(tempProduct);
                     pAdapterUnitsOfMeasurement.notifyDataSetInvalidated();
                 }
-
+                r2++;
+                ff();
             }
             catch (Exception ignored)
             {
@@ -227,7 +405,6 @@ public class StepsFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {
-
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()+1];
                 str_array[0] = "Прием пищи";
@@ -242,7 +419,8 @@ public class StepsFragment extends Fragment {
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 spMeal.setAdapter(adapter);
-
+                r2++;
+                ff();
             }
             catch (Exception ignored)
             {
@@ -262,17 +440,7 @@ public class StepsFragment extends Fragment {
         }
         return 0;
     }
-    private int getPositionMeals(int id_typeLocality)
-    {
-        for (int i = 0; i < spMealsArray.length; i++)
-        {
-            if(spMealsArray[i][0] == String.valueOf(id_typeLocality))
-            {
-                return i;
-            }
-        }
-        return 0;
-    }
+
 
     private class callGetI extends AsyncTask<Void, Void, String> {
         @Override
@@ -318,6 +486,8 @@ public class StepsFragment extends Fragment {
                     listIngredient.add(tempProduct);
                     pAdapterIngredient.notifyDataSetInvalidated();
                 }
+                r2++;
+                ff();
 
             }
             catch (Exception ignored)
@@ -367,12 +537,14 @@ public class StepsFragment extends Fragment {
                             productJson.getInt("IngredientId"),
                             productJson.getInt("RecipeId"),
                             productJson.getInt("UnitsOfMeasurementId"),
-                            productJson.getDouble("Quantity")
+                            productJson.getInt("Quantity")
 
                     );
                     listIng.add(tempProduct);
                     pAdapterIngForRep.notifyDataSetInvalidated();
                 }
+                r2++;
+                ff();
 
             }
             catch (Exception ignored)
@@ -425,6 +597,16 @@ public class StepsFragment extends Fragment {
                 TextMinutesRecipes.setText(Minutes);
                 textComment.setText(response.body().getComment());
                 textDescription.setText(response.body().getDescription());
+                String cal = String.valueOf(response.body().getCalories());
+                etextCall.setText(cal);
+                String sq = String.valueOf(response.body().getSquirrels());
+                etextSquirrels.setText(sq);
+                String fat = String.valueOf(response.body().getFats());
+                etextFat.setText(fat);
+                String car = String.valueOf(response.body().getCarbohydrates());
+                etextCarbohydrates.setText(car);
+                r2++;
+                ff();
             }
             @Override
             public void onFailure(Call<RecepesModel> call, Throwable t) {
@@ -482,6 +664,8 @@ public class StepsFragment extends Fragment {
                     pAdapterStep.notifyDataSetInvalidated();
                 }
                 //loading.setVisibility(View.GONE);
+                r2++;
+                ff();
             }
             catch (Exception ignored)
             {

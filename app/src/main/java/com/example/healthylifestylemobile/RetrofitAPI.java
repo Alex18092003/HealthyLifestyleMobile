@@ -17,12 +17,17 @@ public interface RetrofitAPI {
 
     @POST("Users")
     Call<UserModel> createUser(@Body UserModel userModel);
+    @POST("DailyRations")
+    Call<DailyRationsModel> createDaily(@Body DailyRationsModel DailyRationsModel);
 
     @GET("Users/{id}")
     Call<UserModel> getDATAUser(@Query("id") int id);
 
-    @GET("Users/{id}")
-    Call<UserModel> getCaloriesUser(@Query("id") int id);
+
+    @PUT("DailyRations")
+    Call<DailyRationsModel> updateDaily(@Query("id") int id);
+    @GET("DailyRations")
+    Call<DailyRationsModel> getCaloriesUser(@Query("id") int id,@Query("idd") int idd);
 
     @PUT("Users")
     Call<UserModel> updateUser(@Query("id") int id, @Body UserModel userModel);

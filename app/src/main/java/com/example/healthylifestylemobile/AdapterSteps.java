@@ -41,7 +41,6 @@ public class AdapterSteps extends BaseAdapter {
     }
 
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -55,7 +54,6 @@ public class AdapterSteps extends BaseAdapter {
         StepsModel stepsModel = maskList.get(position);
         NomStep.setText(String.valueOf(stepsModel.getStepNomen()));
         Descr.setText(String.valueOf(stepsModel.getDescription()));
-       // picture.setText(String.valueOf(stepsModel.getQuantity()));
         if(stepsModel.getPhotoAnd().toString().equals("null"))
         {
             picture.setImageResource(R.drawable.wing);

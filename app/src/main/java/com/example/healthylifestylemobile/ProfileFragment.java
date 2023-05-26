@@ -73,12 +73,13 @@ public class ProfileFragment extends Fragment {
 
     public static UserModel userModel;
 
-    ProgressBar progressBar;
+    ProgressBar loading, pbLoading;
     EditText etextRost, etextVes,
             etextAge;
 
     Button Entry, LoginPas;
     TextView Hint;
+    ConstraintLayout tt , clRost, clVes, clAge, clActive, clGoal, clBtn;
     Spinner spActive, spGoal;
 
     @Override
@@ -89,16 +90,27 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    ConstraintLayout clGoal, clActive;
+
+    int r2=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        progressBar = v.findViewById(R.id.pbLoading);
+
         etextRost = (EditText) v.findViewById(R.id.etextRost);
         etextVes = (EditText) v.findViewById(R.id.etextVes);
         etextAge = (EditText) v.findViewById(R.id.etextAge);
+
+        loading = v.findViewById(R.id.loading);
+        pbLoading = v.findViewById(R.id.pbLoading);
+       tt = v.findViewById(R.id.tt);
+//        clRost = v.findViewById(R.id.clRost);
+//        clVes = v.findViewById(R.id.clVes);
+//        clAge = v.findViewById(R.id.clAge);
+//        clBtn = v.findViewById(R.id.clBtn);
+       loading.setVisibility(View.VISIBLE);
+
 
         clGoal =  v.findViewById(R.id.clGoal);
         clActive =  v.findViewById(R.id.clActive);
@@ -130,12 +142,28 @@ public class ProfileFragment extends Fragment {
 
         new GetActivities().execute();
         new GetGoals().execute();
+
+        ff();
         return v;
     }
     String DateOfBirth, Weight, Height, Activ, Goal;
+    public  void ff()
+    {
+        if (r2 == 3) {
+           // v, clRost, clVes, clAge, clActive, clGoal, clBtn;
+            loading.setVisibility(View.GONE);
+            tt.setVisibility(View.VISIBLE);
+//            clRost.setVisibility(View.VISIBLE);
+//            clVes.setVisibility(View.VISIBLE);
+//            clAge.setVisibility(View.VISIBLE);
+//            clActive.setVisibility(View.VISIBLE);
+//            clGoal.setVisibility(View.VISIBLE);
+//            clBtn.setVisibility(View.VISIBLE);
+        }
+    }
     public void callGetUser()
     {
-        progressBar.setVisibility(View.VISIBLE);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -149,7 +177,7 @@ public class ProfileFragment extends Fragment {
                 if(!response.isSuccessful())
                 {
                     Hint.setText("При выводе данных возникла ошибка");
-                    progressBar.setVisibility(View.GONE);
+
                     return;
                 }
                 userModel = new UserModel(0, response.body().getGenderId(), response.body().getLogin(), response.body().getWeight(), response.body().getHeight(),
@@ -165,13 +193,14 @@ public class ProfileFragment extends Fragment {
                 etextAge.setText(DateOfBirth);
                 spActive.setSelection(getPositionActiv(response.body().getActivityId()));
                 spGoal.setSelection(getPositionGoal(response.body().getGoalId()));
-                progressBar.setVisibility(View.GONE);
+                r2++;
+                ff();
                 Hint.setText("");
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
                 Hint.setText("При выводе данных возникла ошибка!");
-                progressBar.setVisibility(View.GONE);
+
             }
         });
     }
@@ -206,7 +235,7 @@ public class ProfileFragment extends Fragment {
             super.onPostExecute(s);
             try
             {
-                progressBar.setVisibility(View.VISIBLE);
+
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()];
                 ActiveArray = new String[tempArray.length()][2];
@@ -221,7 +250,8 @@ public class ProfileFragment extends Fragment {
                 spActive.setAdapter(adapter);
                 callGetUser();
                 Hint.setText("");
-                progressBar.setVisibility(View.GONE);
+                r2++;
+                ff();
             }
             catch (Exception ignored)
             {
@@ -256,7 +286,7 @@ public class ProfileFragment extends Fragment {
             super.onPostExecute(s);
             try
             {
-                progressBar.setVisibility(View.VISIBLE);
+
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()];
                 GoalArray = new String[tempArray.length()][2];
@@ -271,7 +301,8 @@ public class ProfileFragment extends Fragment {
                 spGoal.setAdapter(adapter);
 //                callGetUser();
                 Hint.setText("");
-                progressBar.setVisibility(View.GONE);
+                r2++;
+                ff();
             }
             catch (Exception ignored)
             {
@@ -302,11 +333,13 @@ public class ProfileFragment extends Fragment {
 
     public void updData()
     {
+        pbLoading.setVisibility(View.VISIBLE);
         if(etextRost.getText().toString().equals("") ||
                 etextVes.getText().toString().equals("") ||
                 etextAge.getText().toString().equals("") )
         {
             Hint.setText("Заполните все поля");
+            pbLoading.setVisibility(View.GONE);
             return;
         }
         String age = String.valueOf(etextAge.getText());
@@ -316,21 +349,21 @@ public class ProfileFragment extends Fragment {
         if(value < 14 || value > 80)
         {
             Hint.setText("Возраст введен некорректно");
-            progressBar.setVisibility(View.GONE);
+            pbLoading.setVisibility(View.GONE);
             return;
         }
         final Float value2 = Float.valueOf(ves);
         if(value2 < 30 || value2 > 500)
         {
             Hint.setText("Вес введен некорректно");
-            progressBar.setVisibility(View.GONE);
+            pbLoading.setVisibility(View.GONE);
             return;
         }
         final Float value3 = Float.valueOf(rost);
         if(value3 < 50 || value3 > 265)
         {
             Hint.setText("Рост введен некорректно");
-            progressBar.setVisibility(View.GONE);
+           pbLoading.setVisibility(View.GONE);
             return;
         }
 
@@ -359,7 +392,7 @@ public class ProfileFragment extends Fragment {
                                    int GoalId,
                                    int  DateOfBirth) {
 
-        progressBar.setVisibility(View.VISIBLE);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -376,19 +409,21 @@ public class ProfileFragment extends Fragment {
         call.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                progressBar.setVisibility(View.GONE);
+
                 if(!response.isSuccessful())
                 {
                     Hint.setText( "При изменение данных возникла ошибка");
+                    pbLoading.setVisibility(View.GONE);
                     return;
                 }
                 Hint.setText("");
                 Toast.makeText(getActivity(),"Данные изменены", Toast.LENGTH_LONG).show();
+               pbLoading.setVisibility(View.GONE);
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
                 Toast.makeText(getActivity(), "При изменение записи возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.GONE);
+
             }
         });
     }

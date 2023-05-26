@@ -61,6 +61,7 @@ public class RecepisPerehodFragment extends Fragment {
         // Inflate the layout for this fragment
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         RecepisFragment fragment = new RecepisFragment();
+
         ft.replace(R.id.RecepisPerehod, fragment);
         ft.commit();
         return inflater.inflate(R.layout.fragment_recepis_perehod, container, false);

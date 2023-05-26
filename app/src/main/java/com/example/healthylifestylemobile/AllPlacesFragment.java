@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import retrofit2.Call;
@@ -54,7 +56,9 @@ public class AllPlacesFragment extends Fragment {
         return fragment;
     }
     public static UserModel userModel;
+    public static DailyRationsModel dailyRationsModel;
     TextView textCaloriesEat, textCalories;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,30 +67,123 @@ public class AllPlacesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        //callGetUser();
     }
+    ProgressBar loading;
+    ConstraintLayout v;
+    int r2=0;
+    LinearLayout FF, F;
+    TextView One, Two, Three, OneFAQ, TwoFAQ, ThreeFAQ,  Four, FourFAQ , Five,  FiveFAQ;
 
-    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_all_places, container, false);
         textCaloriesEat =  v.findViewById(R.id.textCaloriesEat);
         textCalories =  v.findViewById(R.id.textCalories);
-        progressBar = v.findViewById(R.id.pbLoading);
+
+        loading = v.findViewById(R.id.pbLoading);
+        FF = v.findViewById(R.id.FF);
+        F = v.findViewById(R.id.F);
+        loading.setVisibility(View.VISIBLE);
+
+
+        One = v.findViewById(R.id.One);
+        Two = v.findViewById(R.id.Two);
+        Three = v.findViewById(R.id.Three);
+        OneFAQ = v.findViewById(R.id.OneFAQ);
+        TwoFAQ = v.findViewById(R.id.TwoFAQ);
+        ThreeFAQ = v.findViewById(R.id.ThreeFAQ);
+        Four = v.findViewById(R.id.Four);
+        FourFAQ = v.findViewById(R.id.FourFAQ);
+        Five = v.findViewById(R.id.Five);
+        FiveFAQ = v.findViewById(R.id.FiveFAQ);
+
+        Five.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(FiveFAQ.getVisibility() == View.VISIBLE)
+                {
+                    FiveFAQ.setVisibility(View.GONE);
+                }
+                else {
+                    FiveFAQ.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        Four.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(FourFAQ.getVisibility() == View.VISIBLE)
+                {
+                    FourFAQ.setVisibility(View.GONE);
+                }
+                else {
+                    FourFAQ.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        One.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(OneFAQ.getVisibility() == View.VISIBLE)
+                {
+                    OneFAQ.setVisibility(View.GONE);
+                }
+                else {
+                    OneFAQ.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        Two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(TwoFAQ.getVisibility() == View.VISIBLE)
+                {
+                    TwoFAQ.setVisibility(View.GONE);
+                }
+                else {
+                    TwoFAQ.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        Three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ThreeFAQ.getVisibility() == View.VISIBLE)
+                {
+                    ThreeFAQ.setVisibility(View.GONE);
+                }
+                else {
+                    ThreeFAQ.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        callPutDail();
 
         callGetUser();
+        callGetDail();
+
+        ff();
         return v;
+    }
+    public  void ff()
+    {
+        if (r2 == 3) {
+
+            loading.setVisibility(View.GONE);
+            FF.setVisibility(View.VISIBLE);
+            F.setVisibility(View.VISIBLE);
+        }
     }
     String Calories;
     public void callGetUser()
     {
-        progressBar.setVisibility(View.VISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-       // Toast.makeText(getActivity(), HomePageWithCalories.index, Toast.LENGTH_LONG).show();
+
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
         Call<UserModel> call = retrofitAPI.getDATAUser(HomePageWithCalories.index);
         call.enqueue(new Callback<UserModel>() {
@@ -96,7 +193,7 @@ public class AllPlacesFragment extends Fragment {
                 if(!response.isSuccessful())
                 {
                     Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
+
                     return;
                 }
                 userModel = new UserModel(0, response.body().getGenderId(), response.body().getLogin(), response.body().getWeight(), response.body().getHeight(),
@@ -105,14 +202,92 @@ public class AllPlacesFragment extends Fragment {
                         response.body().getFats(), response.body().getCarbohydrates());
                 Calories = String.valueOf(response.body().getCalories());
                 textCalories.setText(Calories);
-
-                progressBar.setVisibility(View.GONE);
+                r2++;
+                ff();
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
                 Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.GONE);
             }
         });
     }
+
+    public void callGetDail()
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        Call<DailyRationsModel> call = retrofitAPI.getCaloriesUser(HomePageWithCalories.index,HomePageWithCalories.index);
+        call.enqueue(new Callback<DailyRationsModel>() {
+            @Override
+            public void onResponse(Call<DailyRationsModel> call, Response<DailyRationsModel> response) {
+
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка!" , Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+                dailyRationsModel = new DailyRationsModel(0,
+                        response.body().getUserId(),
+                        response.body().getRecepeId(),
+                        response.body().getDate(),
+                        response.body().getCalories(),
+                        response.body().getSquirrels(),
+                        response.body().getFats(),
+                        response.body().getCarbohydrates(),
+                        response.body().getCaloriesUsers(),
+                        response.body().getMealId());
+
+
+                //String answ = "3.14159";
+                //String newElement = answ.substring(0, answ.split("[.]")[0].length()+3);
+                float ss = Float.parseFloat(String.valueOf(response.body().getCaloriesUsers()));
+                String s = String.valueOf(ss);
+                String newElement = s.substring(0, s.split("[.]")[0].length()+3);
+                textCaloriesEat.setText(newElement);
+                r2++;
+                ff();
+            }
+            @Override
+            public void onFailure(Call<DailyRationsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    public void callPutDail()
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        Call<DailyRationsModel> call = retrofitAPI.updateDaily(HomePageWithCalories.index);
+        call.enqueue(new Callback<DailyRationsModel>() {
+            @Override
+            public void onResponse(Call<DailyRationsModel> call, Response<DailyRationsModel> response) {
+
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка" , Toast.LENGTH_LONG).show();
+
+                    return;
+                }
+                r2++;
+                ff();
+
+            }
+            @Override
+            public void onFailure(Call<DailyRationsModel> call, Throwable t) {
+                Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

@@ -42,14 +42,13 @@ public class AdapterIngForRep extends BaseAdapter {
 
         View v = View.inflate(mContext,R.layout.items_ingredients,null);
 
-        //TextView title = v.findViewById(R.id.Title);
+
         TextView Quantity= v.findViewById(R.id.Quantity);
-        //TextView Units= v.findViewById(R.id.Units);
+
 
 
         IngredientForRecipeModel ingredientForRecipeModel = maskList.get(position);
-        //title.setText(String.valueOf(ingredientForRecipeModel.getIngredientId()));
-        //Units.setText(String.valueOf(ingredientForRecipeModel.getUnitsOfMeasurementId()));
+
         Quantity.setText(String.valueOf(ingredientForRecipeModel.getQuantity()));
 
         return v;

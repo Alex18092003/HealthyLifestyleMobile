@@ -122,6 +122,9 @@ public class UpdateLoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_update_login, container, false);
         user = ProfileFragment.userModel;
 
+
+
+
         Back = (Button) view.findViewById(R.id.Back);
         Entry = (Button) view.findViewById(R.id.Entry);
         Entry.setOnClickListener(new View.OnClickListener() {
