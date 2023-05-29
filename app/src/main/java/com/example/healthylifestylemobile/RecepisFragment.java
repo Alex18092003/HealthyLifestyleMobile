@@ -227,6 +227,7 @@ public class RecepisFragment extends Fragment {
             }
         });
         etextTitle = view.findViewById(R.id.etextTitle);
+
         etextTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

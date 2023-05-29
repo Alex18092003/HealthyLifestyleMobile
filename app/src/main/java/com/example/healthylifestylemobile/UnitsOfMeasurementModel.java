@@ -27,6 +27,10 @@ public class UnitsOfMeasurementModel {
     }
     public String getTitle()
     {
+        if(Title == null)
+        {
+            return "";
+        }
         return Title;
     }
 }

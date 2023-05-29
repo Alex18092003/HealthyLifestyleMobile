@@ -29,6 +29,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/Back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Назад"
+            android:textAllCaps="false"
+            android:textSize="18dp"
+            android:padding="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:onClick="nextBack"
+            android:fontFamily="@font/comforta"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/clFildsInput"
+            app:layout_constraintStart_toStartOf="parent"
+
+            />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clFildsInput"
         android:layout_width="match_parent"
@@ -41,7 +59,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Back"
         android:elevation="30dp"
         >
         <TextView
@@ -180,7 +198,7 @@
             <ListView
                 android:id="@+id/lvDataI"
                 android:layout_width="150dp"
-                android:layout_height="fill_parent"
+                android:layout_height="240dp"
                 android:layout_margin="5dp"
                 android:scrollbars="none"
                 android:layout_alignParentLeft="true"
@@ -192,7 +210,7 @@
         <ListView
             android:id="@+id/lvDataIng"
             android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_height="240dp"
             android:layout_margin="5dp"
             android:layout_alignParentRight="true"
             app:layout_constraintStart_toEndOf="@+id/lvDataI"
@@ -202,7 +220,7 @@
             <ListView
                 android:id="@+id/lvDataUnit"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_height="240dp"
                 android:layout_margin="5dp"
                 android:layout_alignParentRight="true"
                 app:layout_constraintStart_toEndOf="@+id/lvDataIng"
@@ -516,6 +534,7 @@
             android:fontFamily="@font/comforta"
             android:text="Пошаговое приготовление"
             android:textSize="18dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,5 +1,6 @@
 package com.example.healthylifestylemobile;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -112,6 +114,9 @@ public class UpdateLoginFragment extends Fragment {
     TextView Hint;
     ProgressBar progressBar;
     Button Back, Entry;
+    public  int r2=0;
+    ProgressBar loading, pbLoading;
+    ConstraintLayout v;
     ImageView image, image2, image3;
 
     UserModel user;
@@ -123,6 +128,9 @@ public class UpdateLoginFragment extends Fragment {
         user = ProfileFragment.userModel;
 
 
+        loading = view.findViewById(R.id.loading);
+        v = view.findViewById(R.id.v);
+        loading.setVisibility(View.VISIBLE);
 
 
         Back = (Button) view.findViewById(R.id.Back);
@@ -187,37 +195,98 @@ public class UpdateLoginFragment extends Fragment {
         });
 
         textLogin.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus)
+            if (hasFocus) {
                 textLogin.setHint("");
-            else
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+
+                }
+                textLogin.setTypeface(typeface);
+            }
+            else {
                 textLogin.setHint("Логин");
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textLogin.setTypeface(typeface);
+            }
         });
         textPassword.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus)
+            if (hasFocus) {
                 textPassword.setHint("");
-            else
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword.setTypeface(typeface);
+            }
+            else {
                 textPassword.setHint("Старый пароль");
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword.setTypeface(typeface);
+            }
         });
         textPassword2.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus)
+            if (hasFocus) {
                 textPassword2.setHint("");
-            else
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword2.setTypeface(typeface);
+            }
+            else {
                 textPassword2.setHint("Новый пароль");
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword2.setTypeface(typeface);
+            }
         });
         textPassword3.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus)
+            if (hasFocus) {
                 textPassword3.setHint("");
-            else
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword3.setTypeface(typeface);
+            }
+            else {
                 textPassword3.setHint("Повторите пароль");
+                Typeface typeface = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    typeface = getResources().getFont(R.font.comforta);
+                }
+                textPassword3.setTypeface(typeface);
+            }
+
         });
 
         callGetUser();
+
+        ff();
         return view;
+    }
+
+    public  void ff()
+    {
+        if (r2 == 1) {
+
+            loading.setVisibility(View.GONE);
+            v.setVisibility(View.VISIBLE);
+        }
     }
 
     public void callGetUser()
     {
-        progressBar.setVisibility(View.VISIBLE);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://iis.ngknn.ru/ngknn/лебедевааф/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -231,7 +300,7 @@ public class UpdateLoginFragment extends Fragment {
                 if(!response.isSuccessful())
                 {
                     Hint.setText("При выводе данных возникла ошибка");
-                    progressBar.setVisibility(View.GONE);
+
                     return;
                 }
                 user = new UserModel(0, response.body().getGenderId(), response.body().getLogin(), response.body().getWeight(), response.body().getHeight(),
@@ -240,12 +309,13 @@ public class UpdateLoginFragment extends Fragment {
                         response.body().getFats(), response.body().getCarbohydrates());
 
                 textLogin.setText(response.body().getLogin());
-                progressBar.setVisibility(View.GONE);
+                r2++;
+                ff();
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
                 Hint.setText("При выводе данных возникла ошибка!");
-                progressBar.setVisibility(View.GONE);
+
             }
         });
     }
@@ -275,11 +345,13 @@ public class UpdateLoginFragment extends Fragment {
                     {
                         callRegistration();
                         Hint.setText("");
+                        progressBar.setVisibility(View.GONE);
                     }
                     else
                     {
                         callPUTDataMethod(HomePageWithCalories.index);
                         Hint.setText("");
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
                 else
@@ -320,6 +392,7 @@ public class UpdateLoginFragment extends Fragment {
                 {
                     callPUTDataMethod(HomePageWithCalories.index);
                     Hint.setText("");
+                    progressBar.setVisibility(View.GONE);
                 }
                 else
                 {
@@ -365,6 +438,7 @@ public class UpdateLoginFragment extends Fragment {
                 if(!response.isSuccessful())
                 {
                     Hint.setText("При измнение данных пользователя возникла ошибка");
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 Toast.makeText(getActivity(),"Данные изменены", Toast.LENGTH_LONG).show();

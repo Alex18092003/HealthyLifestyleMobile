@@ -50,10 +50,14 @@ public class AdapterDairyRation extends BaseAdapter {
 
         DairyModel dailyRationsModel = maskList.get(position);
 
-        Squirrels.setText(String.valueOf(dailyRationsModel.getSquirrels()));
-        Fats.setText(String.valueOf(dailyRationsModel.getFats()));
-        Carbohydrates.setText(String.valueOf(dailyRationsModel.getCarbohydrates()));
-        Calories.setText(String.valueOf(dailyRationsModel.getCalories()));
+        float ss = Float.parseFloat(String.valueOf(dailyRationsModel.getSquirrels()));
+        Squirrels.setText(String.valueOf(ss));
+        float sss = Float.parseFloat(String.valueOf(dailyRationsModel.getFats()));
+        Fats.setText(String.valueOf(sss));
+        float s = Float.parseFloat(String.valueOf(dailyRationsModel.getCarbohydrates()));
+        Carbohydrates.setText(String.valueOf(s));
+        float sw = Float.parseFloat(String.valueOf(dailyRationsModel.getCalories()));
+        Calories.setText(String.valueOf(sw));
 
         return v;
     }

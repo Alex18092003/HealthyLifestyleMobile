@@ -110,6 +110,7 @@ public class StepsFragment extends Fragment {
     public  int r2=0;
     ProgressBar loading;
     ConstraintLayout v;
+    Button Back;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,6 +121,17 @@ public class StepsFragment extends Fragment {
         v = view.findViewById(R.id.v);
         loading.setVisibility(View.VISIBLE);
         //loading.setMax(100);
+
+        Back = (Button) view.findViewById(R.id.Back);
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                RecepisFragment fragment = new RecepisFragment();
+                ft.replace(R.id.RecepisPerehod, fragment);
+                ft.commit();
+            }
+        });
 
         add = (Button) view.findViewById(R.id.add);
         Hint = view.findViewById(R.id.Hint);
@@ -172,8 +184,9 @@ public class StepsFragment extends Fragment {
         ListView lvDataSteps = view.findViewById(R.id.lvDataSteps);
         pAdapterStep = new AdapterSteps(getActivity(), listSteps);
         lvDataSteps.setAdapter(pAdapterStep);
-        //AdapterSteps.setListViewHeightBasedOnChildren(lvDataSteps);
-        //UIUtils.setListViewHeightBasedOnChildren(lvDataSteps);
+
+
+
 
         spMeal = view.findViewById(R.id.spMeal);
 
@@ -318,7 +331,7 @@ public class StepsFragment extends Fragment {
                 @Override
                 public void onFailure(Call<DailyRationsModel> call, Throwable t) {
                     //Hint.setText("При добавление блюда возникла ошибка: ");
-                    Toast.makeText(getActivity(), "При проверке пароля возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "При добавление блюда возникла ошибка " + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
     }

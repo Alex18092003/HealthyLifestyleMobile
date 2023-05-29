@@ -45,7 +45,7 @@ public class AdapterUnitsOfMeasurement extends BaseAdapter  {
         TextView title = v.findViewById(R.id.Title);
 
         UnitsOfMeasurementModel unitsOfMeasurementModel = maskList.get(position);
-        title.setText(unitsOfMeasurementModel.getTitle());
+        title.setText(String.valueOf(unitsOfMeasurementModel.getTitle()));
 
         return v;
     }

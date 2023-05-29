@@ -199,7 +199,7 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
-                Hint.setText("При выводе данных возникла ошибка!");
+                Hint.setText("При выводе данных возникла ошибка");
 
             }
         });
@@ -422,7 +422,7 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
-                Toast.makeText(getActivity(), "При изменение записи возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "При изменение данных возникла ошибка" + t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });

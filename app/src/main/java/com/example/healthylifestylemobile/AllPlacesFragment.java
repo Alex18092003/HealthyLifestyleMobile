@@ -228,7 +228,7 @@ public class AllPlacesFragment extends Fragment {
 
                 if(!response.isSuccessful())
                 {
-                    Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка!" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"При выводе данных возникла ошибка" , Toast.LENGTH_LONG).show();
 
                     return;
                 }
@@ -248,14 +248,16 @@ public class AllPlacesFragment extends Fragment {
                 //String newElement = answ.substring(0, answ.split("[.]")[0].length()+3);
                 float ss = Float.parseFloat(String.valueOf(response.body().getCaloriesUsers()));
                 String s = String.valueOf(ss);
-                String newElement = s.substring(0, s.split("[.]")[0].length()+3);
-                textCaloriesEat.setText(newElement);
+//                if(s != "0") {
+//                    s = s.substring(0, s.split("[.]")[0].length() + 3);
+//                }
+                textCaloriesEat.setText(s);
                 r2++;
                 ff();
             }
             @Override
             public void onFailure(Call<DailyRationsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -275,7 +277,7 @@ public class AllPlacesFragment extends Fragment {
 
                 if(!response.isSuccessful())
                 {
-                    Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"При выводе данных возникла ошибка" , Toast.LENGTH_LONG).show();
 
                     return;
                 }
@@ -285,7 +287,7 @@ public class AllPlacesFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<DailyRationsModel> call, Throwable t) {
-                Toast.makeText(getActivity(),"При выводе съеденных калорий произошла ошибка", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
             }
         });
     }
