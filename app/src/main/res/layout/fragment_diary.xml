@@ -34,104 +34,186 @@
             android:id="@+id/Breakfast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:padding="15dp"
             android:textSize="20dp"
+            android:background="@color/g"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:text="Завтрак"
+            android:text="Завтрак ▼"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/lvDataBreakfast"
+            app:layout_constraintBottom_toTopOf="@+id/vv"
             ></TextView>
 
-        <ListView
-            android:id="@+id/lvDataBreakfast"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vv"
+            app:layout_constraintTop_toBottomOf="@+id/Breakfast"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/Lunch"
-            app:layout_constraintTop_toBottomOf="@+id/Breakfast" />
+            android:orientation="horizontal"
+            android:background="@color/gg"
+            android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/lvDataBreakfastTitle"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
+                android:layout_margin="5dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        <ListView
+            android:id="@+id/lvDataBreakfast"
+            android:layout_width="100dp"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/Lunch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:padding="15dp"
             android:textSize="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:text="Обед"
+            android:text="Обед ▼"
+            android:background="@color/g"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lvDataBreakfast"
-            app:layout_constraintBottom_toTopOf="@+id/lvDataLunch"
+            app:layout_constraintTop_toBottomOf="@+id/vv"
+            app:layout_constraintBottom_toTopOf="@+id/v2"
             ></TextView>
-        <ListView
-            android:id="@+id/lvDataLunch"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/v2"
+            app:layout_constraintTop_toBottomOf="@+id/Lunch"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
+            android:visibility="gone"
+            android:background="@color/gg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/Dinner"
-            app:layout_constraintTop_toBottomOf="@+id/Lunch" />
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/lvLunchTitle"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
+                android:layout_margin="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/lvDataLunch"
+            android:layout_width="100dp"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"  />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
             android:id="@+id/Dinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:padding="15dp"
             android:textSize="20dp"
+            android:background="@color/g"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:text="Ужин"
+            android:text="Ужин ▼"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lvDataLunch"
-            app:layout_constraintBottom_toTopOf="@+id/lvDataDinner"
+            app:layout_constraintTop_toBottomOf="@+id/v2"
+            app:layout_constraintBottom_toTopOf="@+id/v3"
             ></TextView>
-        <ListView
-            android:id="@+id/lvDataDinner"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/v3"
+            app:layout_constraintTop_toBottomOf="@+id/Dinner"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
+            android:background="@color/gg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/Snack"
-            app:layout_constraintTop_toBottomOf="@+id/Dinner" />
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/lvDinnerTitle"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
+                android:layout_margin="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        <ListView
+            android:id="@+id/lvDataDinner"
+            android:layout_width="100dp"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"  />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
             android:id="@+id/Snack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:padding="15dp"
             android:textSize="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:text="Перекус"
+            android:text="Перекус ▼"
+            android:background="@color/g"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lvDataDinner"
-            app:layout_constraintBottom_toTopOf="@+id/lvDataSnack"
+            app:layout_constraintTop_toBottomOf="@+id/v3"
+            app:layout_constraintBottom_toTopOf="@+id/v4"
             ></TextView>
-        <ListView
-            android:id="@+id/lvDataSnack"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/v4"
+            app:layout_constraintTop_toBottomOf="@+id/Snack"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
+            android:background="@color/gg"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Snack" />
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/lvSnackTitle"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
+                android:layout_margin="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        <ListView
+            android:id="@+id/lvDataSnack"
+            android:layout_width="100dp"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

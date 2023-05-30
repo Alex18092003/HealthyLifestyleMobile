@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -71,6 +72,8 @@ public class DiaryFragment extends Fragment {
 
     AdapterDairyRation pAdapterDairy;
     private List<DairyModel> listDairy= new ArrayList<>();
+    AdapterTitle pAdapterDairyTitle;
+    private List<RecepesModel> listDairyTitle= new ArrayList<>();
     AdapterDairyRation pAdapterDairy3;
     private List<DairyModel> listDairy3= new ArrayList<>();
     AdapterDairyRation pAdapterDairy2;
@@ -78,7 +81,17 @@ public class DiaryFragment extends Fragment {
     AdapterDairyRation pAdapterDairy4;
     ProgressBar loading;
     ConstraintLayout tt;
+
+    AdapterTitle pAdapterDairyTitle2;
+    private List<RecepesModel> listDairyTitle2 = new ArrayList<>();
+    AdapterTitle pAdapterDairyTitle3;
+    private List<RecepesModel> listDairyTitle3 = new ArrayList<>();
+    AdapterTitle pAdapterDairyTitle4;
+    private List<RecepesModel> listDairyTitle4 = new ArrayList<>();
+
     private List<DairyModel> listDairy4= new ArrayList<>();
+    TextView Breakfast,  Lunch, Dinner,Snack;
+    ConstraintLayout vv, v2, v3, v4;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,6 +100,90 @@ public class DiaryFragment extends Fragment {
         loading = view.findViewById(R.id.loading);
         tt = view.findViewById(R.id.tt);
         loading.setVisibility(View.VISIBLE);
+
+        vv = view.findViewById(R.id.vv);
+        v2 = view.findViewById(R.id.v2);
+        v3 = view.findViewById(R.id.v3);
+        v4 = view.findViewById(R.id.v4);
+
+        Breakfast = view.findViewById(R.id.Breakfast);
+        Lunch = view.findViewById(R.id.Lunch);
+        Dinner = view.findViewById(R.id.Dinner);
+        Snack = view.findViewById(R.id.Snack);
+
+        Snack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v4.getVisibility() == View.VISIBLE)
+                {
+                    v4.setVisibility(View.GONE);
+                    Snack.setText("Перекус ▼");
+                }
+                else {
+                    v4.setVisibility(View.VISIBLE);
+                    Snack.setText("Перекус ▲");
+
+                }
+            }
+        });
+        Dinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v3.getVisibility() == View.VISIBLE)
+                {
+                    v3.setVisibility(View.GONE);
+                    Dinner.setText("Ужин ▼");
+                }
+                else {
+                    v3.setVisibility(View.VISIBLE);
+                    Dinner.setText("Ужин ▲");
+                }
+            }
+        });
+        Lunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v2.getVisibility() == View.VISIBLE)
+                {
+                    v2.setVisibility(View.GONE);
+                    Lunch.setText("Обед ▼");
+                }
+                else {
+                    v2.setVisibility(View.VISIBLE);
+                    Lunch.setText("Обед ▲");
+                }
+            }
+        });
+        Breakfast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(vv.getVisibility() == View.VISIBLE)
+                {
+                    vv.setVisibility(View.GONE);
+                    Breakfast.setText("Завтрак ▼");
+                }
+                else {
+                    vv.setVisibility(View.VISIBLE);
+                    Breakfast.setText("Завтрак ▲");
+                }
+            }
+        });
+
+        ListView lvSnackTitle = view.findViewById(R.id.lvSnackTitle);
+        pAdapterDairyTitle4 = new AdapterTitle(getActivity(), listDairyTitle4);
+        lvSnackTitle.setAdapter(pAdapterDairyTitle4);
+
+        ListView lvDinnerTitle = view.findViewById(R.id.lvDinnerTitle);
+        pAdapterDairyTitle3 = new AdapterTitle(getActivity(), listDairyTitle3);
+        lvDinnerTitle.setAdapter(pAdapterDairyTitle3);
+
+        ListView lvLunchTitle = view.findViewById(R.id.lvLunchTitle);
+        pAdapterDairyTitle2 = new AdapterTitle(getActivity(), listDairyTitle2);
+        lvLunchTitle.setAdapter(pAdapterDairyTitle2);
+
+        ListView lvDataBreakfastTitle = view.findViewById(R.id.lvDataBreakfastTitle);
+        pAdapterDairyTitle = new AdapterTitle(getActivity(), listDairyTitle);
+        lvDataBreakfastTitle.setAdapter(pAdapterDairyTitle);
 
         ListView lvDataBreakfast = view.findViewById(R.id.lvDataBreakfast);
         pAdapterDairy = new AdapterDairyRation(getActivity(), listDairy);
@@ -108,6 +205,10 @@ public class DiaryFragment extends Fragment {
         new callGetDairyLunch().execute();
         new callGetDairyDinner().execute();
         new callGetDairySnack().execute();
+        new callGetDairySnackTitle().execute();
+        new callGetDairyBreakfastTitle().execute();
+        new callGetDairyLunchTitle().execute();
+        new callGetDairyDinneTitle().execute();
 
         ff();
         return view;
@@ -115,13 +216,309 @@ public class DiaryFragment extends Fragment {
     int r2= 0;
     public  void ff()
     {
-        if (r2 == 4) {
+        if (r2 == 8) {
             // v, clRost, clVes, clAge, clActive, clGoal, clBtn;
             loading.setVisibility(View.GONE);
             tt.setVisibility(View.VISIBLE);
 
         }
     }
+    private class callGetDairySnackTitle extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url;
+                url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?t=" +3+ "&iddd="+HomePageWithCalories.index+ "&m=" +0);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listDairyTitle4.clear();
+                pAdapterDairyTitle4.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+
+                for (int i = 0;i<tempArray.length();i++)
+                {
+
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    RecepesModel tempProduct = new RecepesModel(
+                            productJson.getInt("RecipeId"),
+                            productJson.getString("Title"),
+                            productJson.getInt("MinutesOfCooking"),
+                            productJson.getString("Description"),
+                            productJson.getString("Comment"),
+                            productJson.getString("Photo"),
+                            productJson.getInt("RecipeType"),
+                            productJson.getInt("MealId"),
+                            productJson.getInt("DietId"),
+                            productJson.getInt("SpecificsId"),
+                            productJson.getInt("DifficultyId"),
+                            productJson.getInt("CookingId"),
+                            productJson.getInt("KitchenId"),
+                            productJson.getDouble("Calories"),
+                            productJson.getDouble("Squirrels"),
+                            productJson.getDouble("Fats"),
+                            productJson.getDouble("Carbohydrates"),
+                            productJson.getString("PhotoAnd")
+
+                    );
+
+                    listDairyTitle4.add(tempProduct);
+                    pAdapterDairyTitle4.notifyDataSetInvalidated();
+                }
+                r2++;
+                ff();
+            }
+            catch (Exception ignored)
+            {
+                Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+
+    private class callGetDairyDinneTitle extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url;
+                url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?t=" +4+ "&iddd="+HomePageWithCalories.index+ "&m=" +0);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listDairyTitle3.clear();
+                pAdapterDairyTitle3.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+
+                for (int i = 0;i<tempArray.length();i++)
+                {
+
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    RecepesModel tempProduct = new RecepesModel(
+                            productJson.getInt("RecipeId"),
+                            productJson.getString("Title"),
+                            productJson.getInt("MinutesOfCooking"),
+                            productJson.getString("Description"),
+                            productJson.getString("Comment"),
+                            productJson.getString("Photo"),
+                            productJson.getInt("RecipeType"),
+                            productJson.getInt("MealId"),
+                            productJson.getInt("DietId"),
+                            productJson.getInt("SpecificsId"),
+                            productJson.getInt("DifficultyId"),
+                            productJson.getInt("CookingId"),
+                            productJson.getInt("KitchenId"),
+                            productJson.getDouble("Calories"),
+                            productJson.getDouble("Squirrels"),
+                            productJson.getDouble("Fats"),
+                            productJson.getDouble("Carbohydrates"),
+                            productJson.getString("PhotoAnd")
+
+                    );
+
+                    listDairyTitle3.add(tempProduct);
+                    pAdapterDairyTitle3.notifyDataSetInvalidated();
+                }
+                r2++;
+                ff();
+            }
+            catch (Exception ignored)
+            {
+                Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+
+    private class callGetDairyLunchTitle extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url;
+                url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?t=" +2+ "&iddd="+HomePageWithCalories.index+ "&m=" +0);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listDairyTitle2.clear();
+                pAdapterDairyTitle2.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+
+                for (int i = 0;i<tempArray.length();i++)
+                {
+
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    RecepesModel tempProduct = new RecepesModel(
+                            productJson.getInt("RecipeId"),
+                            productJson.getString("Title"),
+                            productJson.getInt("MinutesOfCooking"),
+                            productJson.getString("Description"),
+                            productJson.getString("Comment"),
+                            productJson.getString("Photo"),
+                            productJson.getInt("RecipeType"),
+                            productJson.getInt("MealId"),
+                            productJson.getInt("DietId"),
+                            productJson.getInt("SpecificsId"),
+                            productJson.getInt("DifficultyId"),
+                            productJson.getInt("CookingId"),
+                            productJson.getInt("KitchenId"),
+                            productJson.getDouble("Calories"),
+                            productJson.getDouble("Squirrels"),
+                            productJson.getDouble("Fats"),
+                            productJson.getDouble("Carbohydrates"),
+                            productJson.getString("PhotoAnd")
+
+                    );
+
+                    listDairyTitle2.add(tempProduct);
+                    pAdapterDairyTitle2.notifyDataSetInvalidated();
+                }
+                r2++;
+                ff();
+            }
+            catch (Exception ignored)
+            {
+                Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+
+    private class callGetDairyBreakfastTitle extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url;
+                url = new URL("https://iis.ngknn.ru/ngknn/лебедевааф/api/Recipes?t=" +1+ "&iddd="+HomePageWithCalories.index+ "&m=" +0);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listDairyTitle.clear();
+                pAdapterDairyTitle.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+
+                for (int i = 0;i<tempArray.length();i++)
+                {
+
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    RecepesModel tempProduct = new RecepesModel(
+                            productJson.getInt("RecipeId"),
+                            productJson.getString("Title"),
+                            productJson.getInt("MinutesOfCooking"),
+                            productJson.getString("Description"),
+                            productJson.getString("Comment"),
+                            productJson.getString("Photo"),
+                            productJson.getInt("RecipeType"),
+                            productJson.getInt("MealId"),
+                            productJson.getInt("DietId"),
+                            productJson.getInt("SpecificsId"),
+                            productJson.getInt("DifficultyId"),
+                            productJson.getInt("CookingId"),
+                            productJson.getInt("KitchenId"),
+                            productJson.getDouble("Calories"),
+                            productJson.getDouble("Squirrels"),
+                            productJson.getDouble("Fats"),
+                            productJson.getDouble("Carbohydrates"),
+                            productJson.getString("PhotoAnd")
+
+                    );
+
+                    listDairyTitle.add(tempProduct);
+                    pAdapterDairyTitle.notifyDataSetInvalidated();
+                }
+                r2++;
+                ff();
+            }
+            catch (Exception ignored)
+            {
+                Toast.makeText(getActivity(),"При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+
     private class callGetDairySnack extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... voids) {

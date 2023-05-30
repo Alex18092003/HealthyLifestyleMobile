@@ -2,48 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/m"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="14dp"
-        android:textColor="@color/black"
-        android:text="Title"
-        android:fontFamily="@font/comforta"
-        app:layout_constraintEnd_toStartOf="@+id/Entry"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/v"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/v"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/v2"
+           android:orientation="horizontal"
 
-    <Button
-        android:id="@+id/Entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Удалить"
-        android:textAllCaps="false"
-        android:textSize="10dp"
-        android:padding="10dp"
-        android:onClick="nextGender"
-        android:fontFamily="@font/comforta"
-        app:layout_constraintBottom_toTopOf="@+id/v"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Title"
-        />
+            android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/v"
-        app:layout_constraintTop_toBottomOf="@+id/Title"
-        android:layout_width="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-       android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/CaloriesT"
@@ -66,14 +37,27 @@
             android:textSize="10dp"
             android:textColor="@color/black"
             android:text="Calories"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/comforta"
-            app:layout_constraintEnd_toStartOf="@+id/SquirrelsT"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/CaloriesT"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/v2"
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/v3"
+        app:layout_constraintTop_toBottomOf="@+id/v"
+        android:orientation="horizontal"
+
+        android:layout_height="wrap_content">
+
+    <TextView
             android:id="@+id/SquirrelsT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,24 +65,36 @@
             android:textColor="@color/black"
             android:text="Белки"
             android:fontFamily="@font/comforta"
-            app:layout_constraintEnd_toStartOf="@+id/Squirrels"
-            app:layout_constraintStart_toEndOf="@+id/Calories"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Squirrels"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
             />
         <TextView
             android:id="@+id/Squirrels"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10dp"
+            android:layout_marginStart="10dp"
             android:textColor="@color/black"
             android:text="Squirrels"
             android:fontFamily="@font/comforta"
-            app:layout_constraintEnd_toStartOf="@+id/CarbohydratesT"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/SquirrelsT"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/v3"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/v4"
+        app:layout_constraintTop_toBottomOf="@+id/v2"
+        android:orientation="horizontal"
+
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/CarbohydratesT"
             android:layout_width="wrap_content"
@@ -108,7 +104,7 @@
             android:text="Углеводы"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toStartOf="@+id/Carbohydrates"
-            app:layout_constraintStart_toEndOf="@+id/Squirrels"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
@@ -119,12 +115,24 @@
             android:textSize="10dp"
             android:textColor="@color/black"
             android:text="Carbohydrates"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/comforta"
-            app:layout_constraintEnd_toStartOf="@+id/FatsT"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/CarbohydratesT"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/v4"
+android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v3"
+        android:orientation="horizontal"
+
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/FatsT"
             android:layout_width="wrap_content"
@@ -134,7 +142,7 @@
             android:text="Жиры"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toStartOf="@+id/Fats"
-            app:layout_constraintStart_toEndOf="@+id/Carbohydrates"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
@@ -145,6 +153,7 @@
             android:textSize="10dp"
             android:textColor="@color/black"
             android:text="Fats"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/comforta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/FatsT"
